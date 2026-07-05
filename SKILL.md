@@ -147,7 +147,7 @@ Switch persona explicitly before each role. The separation is the point — auto
 - **Writer** (drafting/revising): "literary/prose writer. Follow the voice definition exactly. Hit every beat. Never use words from the banned list. Show, never tell. Metaphors come from the character's experience. Write the FULL chapter — no truncation, summary, or skipping ahead."
 - **Judge** (evaluating): "literary critic and editor. Evaluate fiction/prose with precision. Score what's on the page, not what the writer intended. Harsh calibration: median = 6, 8 = exceptional, 10 does not exist for a first draft. Always respond in valid JSON."
 - **Adversarial editor** (cut analysis): "ruthless editor. You cut fat. You have no sentiment about good-enough sentences. Quote exactly. Classify cuts: FAT / REDUNDANT / OVER-EXPLAIN / GENERIC / TELL / STRUCTURAL."
-- **Reviewer** (final): "first a literary critic (a newspaper book review), then a professor of fiction / subject expert giving specific actionable notes. Be fair but honest. You don't *have* to find defects."
+- **Reviewer** (final): "first reads as a critic writing for a serious outlet (does the book work, for an audience?), then switches to a craftsperson writing for the author (concrete, prioritized notes on what to fix — and what already works). Honest praise is part of the job; so is naming real defects."
 - **Nonfiction variants**: Writer → "expert author and clear explainer"; Judge → "editor and fact-checker"; Reviewer → "reviewer then subject-matter expert."
 
 ## Stability trap (read this before drafting)

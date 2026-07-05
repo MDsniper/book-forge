@@ -44,19 +44,21 @@ Compression sweet spot: a revised chapter lands at **2200–3000 words**. Never 
 Run as **parallel subagents** for genuine independence — each persona reads the manuscript fresh, without seeing the others' notes. The panel is the core quality signal.
 
 ### Fiction panel
-- **The Editor** — prose texture, subtext, sentence craft. Cares about the line.
-- **The Genre Reader** — reads 50+ books/year in this genre. Cares about pacing, mystery, payoff. Compares to the field's benchmarks (Sanderson, Le Guin, Jemisin for fantasy; Connell, Child for thriller; etc.).
-- **The Writer** — has shipped novels. Cares about structure, beats, foreshadowing payoff. "I forgot I was reading" is the highest praise; "I can see the outline" is the worst.
-- **The First Reader** — general reader. No craft terminology. Reports emotionally: "I had to put the book down," "I skimmed this part."
+Run as **parallel subagents** for genuine independence. Each reads the manuscript fresh, with no knowledge of the others' reactions. The disagreements are where the editorial decisions live.
+
+- **The Line Editor** — reads for the sentence. Notices when prose goes slack, when rhythm flattens, when a metaphor is borrowed rather than made. Bored by cliché. Surprised by specificity. Cares about the line-by-line texture more than the plot.
+- **The Genre Veteran** — has read widely and recently in this exact subgenre. Notices pacing problems, missed genre obligations (a romance without a black moment; a mystery that hides the clues), and payoffs that land flat because the setup was mishandled. Compares the book honestly against the field's recent best, not against a generic standard.
+- **The Practitioner** — a working novelist reading as a craftsperson. Notices where structure shows through story ("I can see the outline"), where foreshadowing is too loud or too quiet, where a character arc bends without earning the bend. The highest praise is "I forgot I was reading"; the worst is "I see what you're trying to do."
+- **The Stranger** — a thoughtful general reader with no craft vocabulary. Reports experience, not analysis: where they put the book down to do something else, where they read a passage twice, where they were confused, where they would tell a friend about it. Their confusion and boredom are the most honest signals you'll get.
 
 ### Nonfiction panel
-- **The Editor** — clarity, sentence craft, narrative flow.
-- **The Subject Expert** — checks claims, evidence quality, and whether the book engages the field's real debates.
-- **The Target Reader** — the person the book is for. Did they understand? Did it land? Was it useful?
-- **The Skeptic** — actively argues against the thesis. Where does the book overreach? What's the steelman the book didn't engage?
+- **The Line Editor** — clarity at the sentence level, narrative flow across paragraphs, and whether the prose earns the reader's attention.
+- **The Subject Expert** — a working specialist in the book's field. Checks claims against the evidence, identifies overreach, and asks whether the book engages the field's actual debates or strawmans them.
+- **The Target Reader** — the person the book is for, not a general reader. Did the promise land? Was the method clear? Were the examples useful? Would they recommend it to someone with the same problem?
+- **The Skeptic** — actively argues against the thesis. Where does the book reach past its evidence? What's the strongest version of the opposing view, and does the book engage it or sidestep it?
 
 ### Self-help panel
-- The four above, plus a **Sensitivity / claimer-of-authority** check: Is the book making promises it can't keep? Is it prescriptive where it should be suggestive? Does it acknowledge that techniques don't work for everyone?
+The nonfiction panel, plus a **claimer-of-authority check**: Is the book promising more than the evidence supports? Is it prescriptive where it should be suggestive? Does it acknowledge that no technique works for everyone, and tell the reader what to do if it doesn't work for them?
 
 **Disagreements between readers are where editorial decisions live.** If all four praise everything, re-run the panel — it didn't read carefully. The synthesis step doesn't average the panel; it surfaces the disagreements and decides.
 
@@ -115,11 +117,11 @@ The bug this prevents: doing analysis and rewriting in the same pass leads to ei
 
 ## 7. The dual-persona review loop (after plateau)
 
-The deepest pass. Send the **full manuscript** to a reviewer prompted:
+The deepest pass. Send the **full manuscript** to a reviewer prompted in two passes — first as a critic writing for an audience, then as a craftsperson writing for the author. The first pass is about whether the book works; the second is about how to fix what doesn't.
 
-> **Fiction:** "Read the below novel, '<title>'. Review it first as a literary critic (like a newspaper book review) and then as a professor of fiction. In the later review, give specific, actionable suggestions for any defects you find. Be fair but honest. You don't *have* to find defects."
+> **Fiction review prompt:** "Read the manuscript of '<title>'. First, write the review a working literary critic would publish in a serious outlet — fair, specific, neither damning with faint praise nor gushing. Then, switching to the perspective of an experienced fiction writer who has been paid to teach the craft, give the author concrete, prioritized notes on what to fix. Note any genuine defects: scenes that sag, characters who flatten, prose that drifts, structure that telegraphs. Also note where the book succeeds — solutions matter as much as problems. You are not required to find problems that aren't there; honest praise is part of the job."
 
-> **Nonfiction:** "Read the below book, '<title>'. Review it first as a reviewer (like a major outlet's book review) and then as a subject-matter expert. In the later review, give specific, actionable suggestions for any defects, unsupported claims, or missing engagement with counterarguments. Be fair but honest."
+> **Nonfiction review prompt:** "Read the manuscript of '<title>'. First, write the review a critic at a major outlet would publish — engaging with the thesis, the evidence, and the book's contribution. Then, switching to the perspective of a subject-matter expert who has peer-reviewed work in this field, give the author concrete notes: unsupported claims, overreach, missing engagement with counterarguments, weak sourcing, or unclear reasoning. Flag what works as well as what doesn't."
 
 Parse the review into items. Each item has:
 - **severity:** major | moderate | minor

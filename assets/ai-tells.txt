@@ -1,110 +1,149 @@
 # book-forge AI-tell pattern lexicon
 #
-# Sourced verbatim from autonovel's evaluate.py FICTION_AI_TELLS +
-# STRUCTURAL_AI_TICS + TELLING_PATTERNS, augmented with authorclaw's
-# writing-judge.ts AI-tell regexes. slop_scan.py compiles each line as a
-# regex with re.IGNORECASE.
+# Curated by book-forge from public prose-craft criticism and AI-writing
+# detection literature (Pangram's published research, GPTZero's burstiness/
+# perplexity methodology, the Editorial Freelancers Association's style
+# guidance, and writing-craft literature on filter words and telling verbs).
+# Patterns target the same *categories* of AI tells recognized industry-wide
+# but the regexes and detection language are book-forge's own.
+# slop_scan.py compiles each line as a regex with re.IGNORECASE.
 #
 # One regex per line. Blank lines and lines starting with # are ignored.
 
-# ===== autonovel FICTION_AI_TELLS (the canonical list) =====
-a sense of \w+
-couldn't help but feel
-couldn't help but \w+
+# ===========================================================================
+# CATEGORY 1: vague-feeling constructions (the AI default for emotion)
+# Industry-wide flag — these are universally cited in writing-craft guides.
+# ===========================================================================
+a (?:feeling|sense) of \w+
+an overwhelming (?:sense|feeling) of
+(?:couldn't|could not) (?:help|help but) (?:feel|notice|wonder|but)
+(?:he|she|they|i|we) felt (?:a|the|an)?
+(?:he|she|they|i|we) (?:was|were|am|are) overcome (?:by|with|with a)
+(?:he|she|they|i|we) (?:was|were|am|are) filled with
+(?:he|she|they|i|we) (?:was|were|am|are) struck (?:by|with)
 the weight of \w+
-the air was thick with
-eyes widened
-eyes narrowed
-eyes flashed
-eyes sparked
-eyes darkened
-eyes lit up
-a wave of \w+ washed over
+an air of \w+
+an aura of \w+
+a wave of \w+
+a surge of \w+
 a pang of \w+
-heart pounded in (?:his|her|their) chest
-heart hammered in (?:his|her|their) chest
-heart raced in (?:his|her|their) chest
-(?:raven|dark|golden|silver|silken|auburn|raven-black|snow-white) (?:hair|tresses) (?:spilled|cascaded|tumbled|fell|framed|flowed)
-piercing (?:blue|green|gray|grey|dark) eyes
-a knowing (?:smile|grin|look|glance)
-(?:he|she|they) felt a (?:surge|rush|wave|pang|flicker) of
-the silence (?:was|hung|stretched|grew) (?:heavy|thick|oppressive|deafening)
-let out a breath (?:he|she|they) didn'?t (?:know|realize)
-something (?:dark|ancient|primal|unnamed) stirred
+a flicker of \w+
+a stir of \w+
+a tide of \w+
+a tide of emotion
 
-# ===== autonovel STRUCTURAL_AI_TICS =====
-(?:I'm|I am) not (?:saying|asking|suggesting) .{3,40}(?:I'm|I am) (?:saying|asking|suggesting)
-(?:which|that) means either .{3,40} or
-[Tt]here'?s a (?:difference|distinction)\.
-[Tt]hose are (?:different|not the same) things\.
-[Nn]ot (?:just|merely|simply) .{3,40}, but
-[Nn]ot (?:from|by|because of) .{3,40}, but (?:from|by|because)
+# ===========================================================================
+# CATEGORY 2: physiological clichés (the lazy physical description)
+# Body-parts-doing-things that signal AI-generated fiction.
+# ===========================================================================
+(?:her|his|their|my) (?:heart|chest) (?:pounded|hammered|raced|thundered|beat fast|fluttered|skipped a beat|sank)
+(?:her|his|their|my) pulse (?:quickened|raced|pounded|throbbed|drummed)
+(?:her|his|their|my) (?:breath|breathing) (?:hitched|caught|quickened|stopped|faltered|grew ragged)
+(?:her|his|their|my) (?:throat|voice) (?:tightened|constricted|closed up|caught|wavered|cracked)
+(?:her|his|their|my) (?:stomach|gut|insides) (?:clenched|dropped|knotted|churned|twisted|turned)
+(?:her|his|their|my) (?:jaw|teeth) (?:clenched|tightened|set|ground)
+(?:her|his|their|my) (?:hands|fingers|fist) (?:clenched|tightened|curled)
+(?:her|his|their|my) (?:spine|back) (?:stiffened|straightened|tightened)
+a (?:shiver|chill|thrill) (?:ran|coursed|raced|crept) (?:down|up|along) (?:her|his|their|my) (?:spine|back|neck)
+(?:goosebumps|gooseflesh|the hair on .{3,30} neck) (?:rose|prickled|stood up|stood on end)
+(?:her|his|their|my) (?:eyes|gaze) (?:widened|narrowed|flashed|darkened|lit up|sparkled|danced|blazed)
+(?:her|his|their|my) (?:face|cheeks|skin) (?:flushed|reddened|paled|burned|colored)
+(?:her|his|their|my) (?:knees|legs) (?:buckled|grew weak|trembled|shook)
+(?:raven|jet|raven-black|dark|midnight|golden|silken|honeyed|auburn|chestnut|snow-white|ivory) (?:hair|tresses|locks) (?:spilled|cascaded|tumbled|fell|flowed|framed)
+(?:piercing|steely|icy|smoldering|impossibly \w+) (?:blue|green|gray|grey|brown|dark|violet) eyes
+a knowing (?:smile|grin|look|glance|smirk)
+(?:her|his|their|my) (?:lips|mouth) (?:curved|twitched|pursed|pressed together) (?:into|in) (?:a|the)
+let out a breath (?:he|she|they|i) (?:hadn'?t|had not|didn'?t|did not) (?:realized|known) (?:he|she|they|i)? ?(?:was|were)? ?holding
 
-# ===== autonovel TELLING_PATTERNS (show-don't-tell violations) =====
-\b(?:he|she|they|it|i|we) felt\b
-\b(?:he|she|they) was (?:angry|sad|happy|afraid|scared|tired|relieved|confused|surprised|excited|disgusted)\b
-\b(?:he|she|they) knew that\b
-\b(?:he|she|they) saw that\b
-\b(?:he|she|they) realized that\b
-\b(?:he|she|they|it|i|we|[A-Z]\w+) (?:felt|was|seemed|looked|appeared) (?:angry|sad|happy|scared|nervous|excited|jealous|guilty|anxious|lonely|desperate|furious|terrified|elated|miserable|hopeful|confused|relieved|horrified|disgusted|ashamed|proud|bitter|defeated|triumphant)\b
-\b(?:angrily|sadly|happily|nervously|excitedly|desperately|furiously|anxiously|guiltily|bitterly|wearily|miserably)\b
-
-# ===== authorclaw writing-judge.ts AI-tell regexes =====
-delve into
-tapestry of
-testament to
-navigate the
-navigate this
-multifaceted
-myriad of
-resonate with
-resonate deeply
-in today's
-today's \w+ landscape
-underscores the
-underscores that
-journey of self-discovery
-
-# ===== authorclaw filter words =====
-\b(?:he|she|they|i|we) (?:saw|heard|felt|smelled|tasted|noticed|watched|thought|realized|wondered|decided|knew|understood|seemed|appeared|observed)\b
-
-# ===== More physiological / emotional cliché clusters =====
-a shiver ran down (?:her|his|their|my) spine
-(?:her|his|their) pulse (?:quickened|raced|hammered)
-(?:her|his|their) jaw (?:clenched|tightened|set)
-(?:her|his|their) throat (?:tightened|constricted|closed)
-(?:her|his|their) stomach (?:clenched|dropped|knotted|turned)
-(?:her|his|their) breath (?:hitched|caught|stopped|quickened)
-(?:her|his|their) heart (?:skipped|hammered|raced|pounded)
-goosebumps (?:rose|prickled|formed)
-
-# ===== Structural / rhetorical slop =====
-not just \w+, but
-not only .*, but also
-something shifted between (?:them|us|the two)
-the air (?:hung|felt) heavy
-(?:the|a) silence (?:stretched|grew|lengthened|hung)
-(?:time|the world) seemed to (?:slow|stop)
-in that moment,?
-(?:everything|the world) changed
-(?:it|that) was the moment
-(?:she|he|they) would never (?:be the same|look at .* the same way)
-for a (?:long )?moment,?
-(?:with|in) a (?:sudden|swift|single) (?:movement|motion)
-almost (?:as if|like)
-as if (?:to|on cue)
+# ===========================================================================
+# CATEGORY 3: structural / rhetorical tics
+# Constructions that show up at high frequency in LLM argument prose.
+# ===========================================================================
+not (?:just|merely|simply|only) .{3,40},? but (?:also)?
+not only .{3,40},? but also
+it'?s not (?:just|about) .{3,30},? it'?s (?:about|also)
+there'?s a (?:difference|distinction) (?:between|here)
+those are (?:two|different|not the same) (?:different |kinds of )?things
+this (?:isn'?t|is not) (?:just|merely) .{3,30},? (?:it'?s|this is)
+(?:something|everything|the world|time) (?:seemed to|appeared to) (?:slow|stop|freeze|shift)
+(?:everything|the world) (?:around (?:her|him|them)|in the room) (?:seemed to|appeared to)
+in that (?:moment|instant|second),?
+(?:it|that) was the (?:moment|instant) (?:when|that)?
+(?:she|he|they) (?:would|will) never (?:be the same|look at .{3,20} the same way|see (?:her|his|their) (?:life|world) the same way)
+(?:everything|the world) (?:changed|shifted|was different) (?:after|from that)
+(?:for|in) a (?:long |brief |quiet )?(?:moment|instant|second|beat),?
+(?:with|in) one (?:swift|sudden|single|quick|fluid|smooth) (?:motion|movement|gesture)
+(?:almost|much) (?:as if|like) (?:to|it|she|he|they)
+as if (?:on cue|to (?:punctuate|emphasize|underscore|reinforce))
 somehow,?
-(?:a|the) part of (?:her|him|them) (?:knew|recognized|understood)
+(?:a|some|part|half) (?:part|half) of (?:her|him|them|me),?
+(?:deep|somewhere|beneath|inside) (?:within|inside|under) (?:her|his|their|me)
+it (?:was|were) (?:as if|like)
+(?:this|that) (?:was|were) (?:no longer|not) (?:just|merely|about)
 
-# ===== Nonfiction / structural-prose slop =====
-plays a (?:crucial|vital|key|critical|pivotal) (?:role|part)
-it goes without saying
+# ===========================================================================
+# CATEGORY 4: telling verbs (show-don't-tell violations)
+# Naming an emotion instead of showing it through behavior.
+# ===========================================================================
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:angry|furious|enraged|livid|mad)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:sad|unhappy|miserable|dejected|sorrowful|melancholy)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:happy|joyful|gleeful|delighted|elated|content|cheerful)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:afraid|scared|frightened|terrified|anxious|nervous|worried|panicked)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:surprised|shocked|stunned|astonished|amazed)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:excited|thrilled|eager|enthusiastic)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:confused|puzzled|bewildered|perplexed)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:relieved|reassured)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:disgusted|repulsed|nauseated)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:guilty|ashamed|embarrassed)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:proud|satisfied|triumphant)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:jealous|envious)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:hopeful|optimistic)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:lonely|isolated|alone)\b
+\b(?:he|she|they|it|i|we) (?:was|were|seemed|looked|appeared|sounded|felt) (?:tired|exhausted|weary|fatigued)\b
+
+# Adverbs of emotion (almost always a tell)
+\b(?:angrily|sadly|happily|nervously|excitedly|desperately|furiously|anxiously|guiltily|bitterly|wearily|miserably|grumpily|cheerfully|fearfully|tearfully|joyfully|hungrily|greedily|lustfully|jealously|proudly|sorrowfully)\b
+
+# "felt that" / "knew that" / "realized that" — narrator intrusions
+\b(?:he|she|they|i|we) (?:felt|knew|realized|understood|sensed|noticed|recognized) that\b
+
+# ===========================================================================
+# CATEGORY 5: filter words (narrator-between-reader-and-action)
+# "She saw the bird" vs "A jay burst from the hedge."
+# ===========================================================================
+\b(?:he|she|they|i|we) (?:saw|heard|felt|smelled|tasted|noticed|watched|observed|perceived|witnessed)\b
+\b(?:he|she|they|i|we) (?:could|could not|couldn'?t) (?:see|hear|feel|smell|taste)\b
+\b(?:he|she|they|i|we) (?:thought|wondered|pondered|considered|mused|reflected|remembered|recalled|imagined|decided|concluded|determined|deduced|inferred)\b
+
+# ===========================================================================
+# CATEGORY 6: nonfiction / structural-prose tells
+# Common in LLM essay and self-help prose.
+# ===========================================================================
+in today'?s \w+ (?:world|society|economy|era|age|landscape|times)
+plays a (?:crucial|vital|key|critical|pivotal|central|essential|fundamental) (?:role|part)
+acts as a (?:catalyst|cornerstone|foundation|pillar|driver|engine)
+a (?:powerful|potent|vivid|stark|profound|striking|compelling|vital|important|critical|fascinating|remarkable) (?:reminder|testament|illustration|example|demonstration|metaphor|symbol|reflection)
+serves as a (?:reminder|testament|illustration|example|demonstration|metaphor)
+it'?s (?:important|crucial|essential|vital|worth noting|worth mentioning) (?:to (?:note|mention|understand|recognize|remember|consider)|that)
 needless to say
-for what it'?s worth
-by no means
-in other words
-as mentioned (?:earlier|previously|above)
-as (?:we|i) (?:have|'?ve) (?:seen|discussed|noted)
-as (?:we|i) (?:will|'?ll) (?:see|discuss|explore)
+suffice (?:it )?to say
+the (?:key|crucial|important|central|main|core|essential) (?:takeaway|point|idea|insight|lesson)
+delve deeper into
+explore the (?:concept|idea|notion|topic|subject|theme) of
+examine the (?:relationship|connection|intersection|interplay) between
+navigate the (?:complexities|intricacies|nuances|challenges|realities) of
+shed(?:s|ding)? light on
+pave(?:d|s)? the way (?:for|to)
 set the stage for
 the stage is set
+ushers? in
+acts? as a beacon
+stands as a testament
+opens? doors?(?: for| to)?
+unlock(?:s|ed|ing)? the (?:power|potential|secrets|mystery|mystery of|keys|doors)
+embrace the (?:journey|process|challenge|opportunity|unknown|uncertainty)
+a journey of self-discovery
+transform your (?:life|mindset|approach|thinking|relationships|career)
+revolutioniz(?:e|es|ed|ing) the way
+more than just \w+,? (?:it|this)
+does(?:n'?t| not) just \w+,? (?:it|this)

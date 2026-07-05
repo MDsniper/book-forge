@@ -17,41 +17,46 @@ The chapter prompt assembles, in order:
 
 For nonfiction, also include the **steelman** from `thesis.md` so the chapter engages the opposing view honestly rather than strawmanning it.
 
-## The 24 writing instructions
+## The chapter-drafting directives
 
-Read these into the writer persona before every draft. They are the difference between a chapter and a summary.
+Read these into the writer persona before every draft. These are book-forge's own directives, organized into four groups: shape, texture, structure, and anti-patterns. They are the difference between a chapter and a summary.
 
-**Target & shape**
-1. Write approximately the target word count (default 3000). Do not truncate.
-2. Third-person limited past tense, locked to one POV character (fiction). Nonfiction: stay in the chosen register from `voice.md` Part 2.
-3. Hit all beats in this chapter's outline.
-4. Plant every foreshadowing item due this chapter; pay off every item due.
+### Shape — what the chapter must accomplish
 
-**Texture**
-5. Sensory detail in every scene — at least three senses.
-6. No words from the banned list (`assets/banned-words.txt` + project overrides).
-7. No AI fiction tells (`assets/ai-tells.txt`).
-8. Vary sentence length. Long, medium, short. Sentence-length CV should be ≥ 0.3.
-9. Metaphors come from the character's experience (blacksmith → heat/metal; sailor → tides). For nonfiction, metaphors from the subject domain.
-10. Trust the reader. Don't over-explain.
-11. Show, never tell emotions. (Fiction.)
+- **Length:** write the full target word count (default 3000). Do not summarize, truncate, or skip ahead. If running short, expand scenes — add dialogue beats, sensory moments, interior reaction — never summary.
+- **POV:** stay locked to one point-of-view character per chapter (fiction). For nonfiction, hold the chosen register from `voice.md` Part 2 without drifting.
+- **Beat coverage:** every beat in the chapter's outline entry must appear. A beat compressed to a single sentence instead of lived in a scene counts as missed.
+- **Threads:** every foreshadowing plant due this chapter must be planted; every payoff due must land.
 
-**Structure**
-12. Start **in scene**. No throat-clearing, no weather, no waking up unless it's load-bearing.
-13. End on a moment — a turn, an image, a question — not a summary.
+### Texture — how the prose must feel
 
-**Anti-patterns (items 14–24)**
-14. No triadic lists ("X, Y, and Z") more than once per chapter.
-15. No "He did not [verb]" constructions more than once.
-16. No "He thought about [X]" more than once — dramatize the thought instead.
-17. No "the way [X] did [Y]" more than twice.
-18. No over-explaining after showing. Once you've shown it, move on.
-19. Max 2 section breaks per chapter.
-20. Vary paragraph length. Avoid a run of same-length paragraphs.
-21. End differently from the previous chapter. Vary the closing register.
-22. Include at least one **surprising moment** — something the reader didn't predict.
-23. ≥ 70% of the chapter in-scene (dialogue + action), ≤ 30% summary/reflection.
-24. Dialogue sounds like speech, not like exposition with quotation marks. People interrupt, deflect, and don't finish sentences.
+- **Sensory ground:** every scene anchors in at least three senses. Not just sight — smell, touch, taste, sound.
+- **Clean vocabulary:** no banned words (`assets/banned-words.txt` + project overrides) and no AI-tell patterns (`assets/ai-tells.txt`).
+- **Sentence-length variation:** mix long, medium, and short. Aim for a sentence-length coefficient of variation ≥ 0.3 (the slop scanner enforces this). Three short sentences in a row are a deliberate choice; ten are a tic.
+- **Earned figurative language:** metaphors and similes draw from the POV character's domain (a blacksmith reaches for heat and metal; a sailor for tides and line). Generic stock comparisons are slop.
+- **Show, don't tell emotion (fiction):** behavior and physiology on the page; the reader infers the feeling. Naming an emotion ("she was afraid") is a tell — replace it with what fear actually does to her body and choices.
+- **Trust the reader:** don't explain what a scene meant. Let it land.
+
+### Structure — how the chapter must move
+
+- **Open in scene:** drop the reader into action or dialogue. No weather openers, no dream sequences, no waking up — unless the moment is load-bearing for the story.
+- **End on a turn:** close on an image, a question, a shift, or a quiet beat — never a recap. The last sentence is what readers carry into the next chapter.
+- **Scene-to-summary ratio:** roughly 70% in-scene (moment-by-moment action and dialogue), 30% reflection or summary. Invert that and the chapter reads as reportage.
+- **Section breaks:** at most two per chapter, used only for genuine time or location jumps — never as a rhythm crutch.
+
+### Anti-patterns to watch for
+
+These recur in unguarded prose. None is forbidden — each is a *budget* to spend deliberately, not an infinite resource.
+
+- **The rule of three abused:** "X. Y. Z." lists and "X and Y and Z" triads. Once per chapter is dramatic; four times is mechanical.
+- **Negation as emphasis:** "She did not look back." Effective once; diluted if it appears five times.
+- **Rehearsed thought:** "He thought about his father" — narrate the thought itself (as fragment, action, or dialogue) instead of announcing it.
+- **The "the way" simile connector:** "the way his mother used to" — twice per chapter is plenty.
+- **Telling after showing:** the worst habit. Once a scene has demonstrated something, the narrator must not restate it. Trust the scene.
+- **Paragraph uniformity:** AI prose clusters at 4–6 sentences per paragraph. Vary deliberately: include a one-line paragraph and a six-sentence one in every chapter.
+- **Predictable arc:** every chapter should contain at least one moment the reader didn't see coming. Competent-but-predictable is still predictable.
+- **Same ending as last chapter:** vary the closing register. Two emotional-pivot endings in a row read as formula.
+- **Dialogue that sounds like prose:** real speech stumbles, interrupts, trails off, says the wrong thing. At least one imperfect line per scene.
 
 ## Anti-summarize rules (load-bearing)
 
@@ -73,7 +78,7 @@ If the chapter comes back under target word count, that's a summary — regenera
 
 ## Write → polish loop (per chapter)
 
-1. **Write** the full draft against the assembled context window with the 24 instructions.
+1. **Write** the full draft against the assembled context window with the chapter-drafting directives above.
 2. **Polish** in a separate pass — same persona, polish prompt above. Output replaces the draft.
 3. Run `python scripts/slop_scan.py chapters/ch_NN.md`. Note the penalty.
 4. Run the **LLM judge** (separate persona, harsh calibration). Score = judge_overall − slop_penalty.

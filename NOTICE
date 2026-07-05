@@ -1,0 +1,115 @@
+NOTICE — book-forge
+
+This product includes software, design patterns, and methodology
+adapted from the following third-party projects.
+
+======================================================================
+1. authorclaw
+======================================================================
+
+Original work:  https://github.com/Ckokoski/authorclaw
+Copyright:      © 2026 Writing Secrets (Beach Blogger LLC)
+License:        MIT (see below)
+
+Adapted into book-forge with permission of the MIT license, which
+permits use, modification, and distribution provided the original
+copyright notice and license are preserved.
+
+Portions of book-forge adapt ideas from authorclaw, including:
+  - The write→polish two-step for chapter drafting, with explicit
+    anti-summarize output rules.
+  - The separation of analysis passes from application passes in
+    the revision loop.
+  - The structural-beat calculator for mapping story frameworks to
+    chapter positions.
+  - The "no fabricated citations" hard rule for nonfiction evidence.
+  - The author-persona concept for series and pen-name publishing.
+
+The MIT license requires the following notice:
+
+    MIT License
+
+    Copyright (c) 2026 Writing Secrets (Beach Blogger LLC)
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+authorclaw's authors do not endorse this project and are not responsible
+for book-forge's implementation or behavior.
+
+======================================================================
+2. autonovel (methodology inspiration only — no code or text reused)
+======================================================================
+
+Original work:  https://github.com/NousResearch/autonovel
+Author:         NousResearch
+License:        At the time of this release, the autonovel repository
+                does not include a LICENSE file. Without a license,
+                the source code and text are "all rights reserved" by
+                default.
+
+book-forge is inspired by the *methodology* described in autonovel's
+documentation, including:
+  - The 5-layer + canon-truth-DB model of a book.
+  - The modify-evaluate-keep/discard loop wrapped around quality checks.
+  - The use of multiple "immune systems" (mechanical, judge, panel)
+    for quality control.
+  - The foreshadowing/thread ledger.
+  - The anti-score-inflation principle.
+
+Methodologies and ideas are not subject to copyright. To respect the
+absence of a license, NO source code, prompts, lexicons, or prose
+from autonovel are included in this project. All expression is original
+to book-forge.
+
+If autonovel's maintainers add a permissive license in the future, we
+would welcome the opportunity to credit them more formally.
+
+======================================================================
+3. Book-craft methodology (public domain craft literature)
+======================================================================
+
+book-forge implements established book-craft frameworks that long
+predate both autonovel and authorclaw, and that are part of the open
+craft literature. Attribution for these methods:
+
+  - Save the Cat! Beat Sheet — Blake Snyder, "Save the Cat!" (2005)
+  - Story Circle — Dan Harmon (channeling Joseph Campbell's
+    Monomyth / Hero's Journey)
+  - MICE Quotient — Orson Scott Card, "Characters and Viewpoint" (1988)
+  - Sanderson's Laws of Magic — Brandon Sanderson (lecture series,
+    beginning 2011)
+  - Scene-Sequel Structure — Dwight V. Swain, "Techniques of the
+    Selling Writer" (1965)
+  - Romancing the Beat — Gwen Hayes, "Romancing the Beat" (2016)
+  - The Three-Slider Character Model — Brandon Sanderson (lectures)
+  - Wound / Want / Need / Lie framework — K.M. Weiland, "Creating
+    Character Arcs" (2016)
+
+These frameworks are referenced under fair use for the purpose of
+teaching and tooling. Their names remain the trademarks of their
+originators.
+
+======================================================================
+book-forge itself
+======================================================================
+
+Copyright (c) 2026 book-forge contributors
+License: MIT — see [LICENSE](./LICENSE)
+
+The book-forge installer (bin/cli.mjs), the publish phase
+(scripts/publish.py, references/publish.md, references/launch.md),
+the image generator (scripts/image.py, references/images.md), the
+npx installer integration, the SKILL.md orchestration, the slop
+lexicons (assets/banned-words.txt, assets/ai-tells.txt), and the
+synthesis across these sources are original work.

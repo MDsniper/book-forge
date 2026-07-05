@@ -51,12 +51,17 @@ Every chapter is written against the foundation. A weak foundation forces the wr
 
 ## Harsh calibration (apply at every evaluation)
 
-> **9–10:** Could not improve this with a month of focused editorial work. Reserve 10 for work that **surprises** you.
-> **7–8:** Strong. A score of 8+ requires **zero major gaps**.
-> **5–6:** Competent but unremarkable. The median AI output.
-> **Below 5:** Real problems.
+Use the same bands the chapter judge uses (see `quality.md`):
 
-**FINAL CHECK (always apply):** If your overall_score is above 7, re-read your gap lists. If any gap describes a problem that would force a writer to stop and invent something during drafting, your score is too high. Revise down.
+- **9.0–10.0** — Exceptional. The foundation is publishable-grade: deep where it needs depth, complete enough that a drafter never has to invent under pressure, with surprises in its choices.
+- **7.5–8.9** — Strong. Solid foundation; minor gaps only. **Even one major gap caps the score at 7.**
+- **6.0–7.4** — Solid. Functional, but generic in places. Where most competent AI foundations land.
+- **4.0–5.9** — Underbuilt. A drafter would have to invent substantial material on the fly.
+- **Below 4.0** — Broken.
+
+Median competent AI output sits at 6.0–6.5. Treat anything above 7 as a claim that requires evidence.
+
+**Forced re-read (apply to any score above 7):** re-read your gap list. If any gap names a problem that would force the writer to stop drafting and invent something — an undefined rule, a missing character beat, a scene the outline calls for but the foundation doesn't support — the score comes down. A foundation that creates invention pressure is not a 7+.
 
 ## MICE closure (fiction)
 

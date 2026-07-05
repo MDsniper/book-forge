@@ -2,7 +2,7 @@
 
 An autonomous book-writing skill. Plans, writes, revises, and exports full-length books — **fiction, nonfiction, and self-help** — from a one-line idea to a packaged manuscript.
 
-Ports the methodology of [autonovel](https://github.com/NousResearch/autonovel) (NousResearch) and folds in the best ideas from [authorclaw](https://github.com/Ckokoski/authorclaw) (Ckokoski).
+Inspired by the methodology of [autonovel](https://github.com/NousResearch/autonovel) (NousResearch) and the workflow design of [authorclaw](https://github.com/Ckokoski/authorclaw) (Ckokoski, MIT licensed). All expression in this skill is original — see [Credits](#inspiration--credits) and [NOTICE](./NOTICE) for details.
 
 ## Works in: ZCode · Claude Code · Factory Droid · OpenCode · Kimi CLI · OpenClaw · Hermes Agent
 
@@ -144,8 +144,13 @@ MyBook/
 
 ## Inspiration & credits
 
-- **autonovel** (NousResearch) — the 5-layer + canon model, modify-evaluate-keep loop, three immune systems, 4-persona reader panel, foreshadowing ledger with MICE closure, anti-inflation scoring, stability-trap countermeasures.
-- **authorclaw** (Ckokoski) — the Soul/persona layer, the write→polish two-step with anti-summarize output rules, the 21-step deep revision (analyze vs. apply discipline), structural beat math, the no-fabricated-citations hard rule, multi-pen-name and nonfiction/self-help support.
+book-forge is an original work that draws inspiration from two projects in the AI-book-writing space. All expression in this skill (prompts, lexicons, prose, code) is original to book-forge.
+
+- **[authorclaw](https://github.com/Ckokoski/authorclaw)** (© 2026 Writing Secrets / Beach Blogger LLC, MIT licensed) — portions of this skill adapt ideas from authorclaw, including the write→polish two-step with anti-summarize output rules, the analyze-vs-apply revision discipline, structural beat math, and the no-fabricated-citations hard rule. The MIT license and copyright notice are preserved in [NOTICE](./NOTICE). Per the MIT license, this attribution is provided in derivative work; authorclaw's authors do not endorse this project.
+
+- **[autonovel](https://github.com/NousResearch/autonovel)** (NousResearch) — autonovel's *methodology* (the 5-layer + canon model, the modify-evaluate-keep/discard loop, the use of multiple "immune systems" for quality control, the foreshadowing ledger, the anti-inflation principle) inspired the design of this skill. **No source code or text from autonovel is included.** At the time of this release, autonovel does not carry a license file; we therefore limited our reuse to the ideas and methodology (which are not copyrightable) and wrote all expression from scratch. If autonovel's maintainers add a permissive license, we would welcome the opportunity to credit them more formally.
+
+The book-writing methodology this skill implements (Save the Cat, Story Circle, MICE quotient, Sanderson's Laws, foreshadowing ledgers, scene-sequel structure) predates both projects and is drawn from the open craft literature (Snyder, Harmon, Card, Sanderson, Swain, Weiland, etc.).
 
 ## License
 

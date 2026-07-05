@@ -1,9 +1,9 @@
 # book-forge banned-word lexicon
 #
-# Sourced verbatim from autonovel's evaluate.py TIER1_BANNED + TIER2_SUSPICIOUS
-# lists, plus TIER3 filler phrases, augmented with authorclaw's mechanical-
-# screen lexicons (writing-judge.ts) and genre/usage extensions. slop_scan.py
-# reads this file.
+# Curated by book-forge from public AI-writing criticism and style guides
+# (the EFA's usage notes, common style guidance, AI-detector lexicons like
+# Pangram/GPTZero's published word lists, and prose-craft literature).
+# Not derived from any single source. slop_scan.py reads this file.
 #
 # Format:
 #   - Lines starting with # are comments; blank lines ignored.
@@ -13,176 +13,853 @@
 #     case-insensitive substrings.
 #   - Add project-specific bans to the project's .book-forge/banned-words.txt.
 
-# ===== TIER 1 — autonovel "kill on sight" (corporate-AI vocabulary) =====
+# ===========================================================================
+# TIER 1 — corporate-jargon and AI-favorite vocabulary
+# These are words that appear at high frequency in LLM output across every
+# genre and almost never in good prose. They signal "machine-written."
+# ===========================================================================
+ascertain
+bolster
+burgeoning
+catalyze
+catalyst
+caveat
+commence
+comprehensive
+consequently
+constitute
+cultivate
 delve
-delved
-delving
-utilize
-utilized
-utilizing
-leverage
-leveraged
-leveraging
-facilitate
-facilitated
+demonstrate
+disposition
 elucidate
 embark
 endeavor
 encompass
-multifaceted
-tapestry
-paradigm
-synergy
-synergize
+endeavour
+enhance
+epitome
+erroneous
+essential
+exacerbate
+exemplify
+expedite
+expound
+facilitate
+foster
+furthermore
+galvanize
+harness
+heretofore
+hitherto
 holistic
-catalyze
-catalyst
+hyperbole
+implement
+inadvertently
+inconvenience
+incorporate
+indicate
+inquire
+integrate
+intricate
 juxtapose
+leverage
+likewise
+mitigate
+moreover
+multifaceted
 myriad
+nevertheless
+notwithstanding
+nuance
+nuanced
+obfuscate
+obtain
+optimal
+optimize
+orient
+paradigm
+pertinent
 plethora
-
-# ===== TIER 2 — autonovel "suspicious in clusters" =====
+possess
+predicament
+predominantly
+preclude
+predilection
+preeminent
+prudent
+quintessential
+realm
+reiterate
+relinquish
+resonant
+resonate
 robust
-comprehensive
+salient
+scrutinize
 seamless
 seamlessly
-cutting-edge
-innovative
-innovate
-streamline
-empower
-foster
-enhance
-elevate
-optimize
-pivotal
-intricate
-profound
-resonate
+subsequently
+synergy
+synergize
+tapestry
+tenet
+thereby
+thereof
 underscore
-harness
-cultivate
-bolster
-galvanize
+undertake
+utilize
+viable
+viz
+whereby
+wherein
+whilst
+wrought
+
+# ===========================================================================
+# TIER 2 — suspicious in clusters (3+ in 500 words = penalty escalation)
+# Words that have legitimate uses but show up together in AI summary prose.
+# ===========================================================================
+accessible
+actionable
+adaptable
+agile
+align
+aligning
+authentic
+benchmark
+blueprint
+boost
+breakthrough
+catalyze
+cohesive
+compelling
+conducive
+core
 cornerstone
+craft
+curated
+deliver
+dialogue
+disrupt
+dynamic
+ecosystem
+elevate
+elevating
+empower
+empowering
+enable
+enabler
+engage
+evolve
+evolving
+expand
+framework
+foundational
 game-changer
+holistic
+immersive
+impact
+innovate
+innovative
+insight
+insightful
+intuitive
+journey        # when used as metaphor: "your writing journey"
+keystone
+landscape      # metaphorical: "the publishing landscape"
+leverage
+lifelong
+mantra
+meaningful
+mindset
+mission
+mold
+navigate       # metaphorical: "navigate the modern world"
+nimble
+nurture
+optimization
+optimize
+paramount
+pathway
+pinpoint
+pivotal
+powerhouse
+premier
+progress
+propel
+quintessential
+refine
+reinforce
+resilience
+resilient
+revolutionize
+robustness
+scaffold
+scalability
 scalable
-nuanced
+spearhead
+standardize
+streamline
+symbiotic
+synergy
+tailored
+tenet
+thrive
+transform
+transformative
+transition
+unprecedented
+unparalleled
+unveil
+uplift
+value
+vibrant
+vision
+visionary
+vital
+wholistic
 
-# ===== authorclaw mechanical-screen additions (writing-judge.ts) =====
-visceral
-beacon
-realm
-realms
-landscape
-navigate
-
-# ===== Fiction stock vocabulary =====
+# ===========================================================================
+# Fiction stock vocabulary (slop regardless of tier)
+# Words that turn up in generic fantasy/thriller/romance AI prose.
+# ===========================================================================
+abyss
 ancient
-mystical
-powerful
-mysterious
-destiny
-eternal
-legendary
-mythic
-timeless
-sacred
-forbidden
-cursed
+ashes
+bane
+beckon
+begrudge
+bestow
+betrayal
+blackened
 blessed
-enchanted
-forgotten
-shadows
+blood-soaked
+boulder
+bounded
+breeze
+cataclysm
+century-old
+chasm
+cloak
+conjured
+cursed
+darkened
 darkness
+deceit
+destined
+destiny
+dewy
+dusk
+echoes
+elder
+elemental
+embers
+enchanted
+endless
+eon
+ethereal
+eons
+eternal
+eternity
+evanescent
+ever-shifting
+fabled
+fading
+fallen
+foreboding
+forgotten
+forsaken
+fragrant
+gilded
+gleam
+glisten
+gloom
+gory
+grand
+haven
+haunted
+hallowed
+havoc
+hidden
+hollow
+ill-fated
+immemorial
+impending
+incandescent
+infernal
+iron-willed
+keep
+legacy
+lord
+luminous
+lurk
+majestic
+marvel
+melancholy
+menacing
+merciless
+mighty
+mist
+moonlit
+morbid
+mount
+myriad
+mysterious
+mystic
+mystical
+myth
+mythical
+noble
+oblivion
+omen
+ominous
+pale
+peril
+perilous
+phantom
+prophecy
+prophesied
+quagmire
+radiant
+raven
+raven-black
+realm
+reign
+relic
+reverie
+ruin
+sacred
+saga
+savage
+scarred
+scourge
+seer
+shadow
+shadowed
+shadows
+shimmer
+shroud
+shrouded
+silhouette
+silver-tongued
+sinister
+slumber
+smoldering
+somber
+sorcery
+sorrow
+soul
+spectral
+spellbound
+splendor
+stalk
+stoic
+stormy
+strange
+surge
+sworn
+tempest
+terrible
+thicket
+thrall
+throne
+throng
+timeless
+towering
+tranquil
+tremor
+twilight
+unbroken
+undergrowth
+unearthly
+unholy
+unrelenting
+unwavering
+unyielding
+utmost
+vanquish
+vengeance
+vile
+vivid
+voracious
+vortex
+wail
+wan
+wane
+warrior
+watcher
+whisper
+whispered
+whispers
+wicked
+wily
+withered
+wondrous
+wrath
+wraith
+wreak
+wrought
+yearn
 
-# ===== Self-help / nonfiction slop =====
+# ===========================================================================
+# Self-help / prescriptive nonfiction slop
+# ===========================================================================
 abundance
-vibration
-vibrational
-manifest
-manifesting
-manifestation
+accountability
+affirmation
 align
 aligned
+aligning
+authenticity
+awaken
+awakening
+balance
+become
+blockage
+breakthrough
+centered
+clarity
+compass
+conscious
+consciousness
+cultivate
+embodiment
+empower
+empowered
+empowering
+emPOWERment
+enlighten
+flourish
+fulfillment
+glow
+glow-up
+grind
+grit
+grounded
+growth
+heal
+healing
+holistic
+hustle
 intention
 intentional
-authentic
-authenticity
-grit
-resilient
-resilience
-mindful
+journey
+level-up
+limitless
+live
+manifest
+manifestation
+manifesting
+mindset
 mindfulness
+nourish
+nurture
+optimize
+overcome
+paradigm
+pathway
+potential
+power
+practice
+presence
+purpose
+purpose-driven
+realize
+reclaim
+resilience
+resilient
+ritual
+self-actualization
+self-love
+shift
+spark
+spirit
+spiritual
+thrive
+transform
+transformation
+transformative
+unblock
 unlock
 unlocked
 unlocking
-transform
-transformed
-transforming
-transformative
+unleash
+uplift
+vibration
+vibrational
+vision
+well-being
+wellness
+zen
 
-# ===== TIER 3 — autonovel filler phrases (matched as substrings) =====
-it's worth noting that
-it is worth noting that
-it's important to note that
-it is important to note that
-it's worth mentioning that
-let's dive into
-lets dive into
-let's explore
-as we can see
-at the end of the day
-it goes without saying
-when it comes to
-in the realm of
-one might argue that
-it could be suggested that
-this begs the question
-in today's fast-paced
-in today's digital
-in today's modern
+# ===========================================================================
+# TIER 3 — filler phrases (matched as case-insensitive substrings)
+# Common AI-prose openers and connective tissue.
+# ===========================================================================
+a myriad of
+above all
+accordingly
+as a result
+as discussed
+as evident
+as mentioned
+as noted
+as previously mentioned
+as stated
+as such
+at its core
+bear in mind
+by and large
+by means of
+certainly
+clearly
+come into play
+considering
+despite the fact
+duly noted
+each and every
+essentially
+even though
+for all intents and purposes
+for instance
+for the most part
+for the purpose of
+further to
+generally speaking
+given that
+granted that
+having said that
+in a nutshell
+in a sense
+in addition
+in conclusion
+in contrast
+in essence
+in general
+in light of
+in other words
+in particular
+in reality
+in recent years
+in short
+in spite of
+in summary
+in terms of
+in the context of
+in the event that
+in the modern era
+in the world of
 in today's complex
-not just
-but also
-
-# ===== authorclaw banned cliches (writing-judge.ts) =====
-tip of the iceberg
-in the blink of an eye
-butterflies in stomach
-heart skipped a beat
-no stone unturned
-calm before the storm
-only time will tell
-deafening silence
-for what felt like hours
-for what felt like an eternity
-eyes bored into
-eyes drilled into
-
-# ===== Self-help / nonfiction phrase slop =====
+in today's digital
+in today's fast-paced
+in today's modern
 in today's world
-plays a crucial role
-plays a vital role
-plays a key role
-plays a critical role
-plays a pivotal role
+in turn
+incidentally
+indeed
+it could be argued
+it goes without saying
+it is important to note
+it is worth noting
+it's important to note
+it's worth noting
+last but not least
+let us consider
+make no mistake
+more often than not
+needless to say
+not to mention
+of course
+on balance
+on the contrary
+on the other hand
+one might argue
+plainly
+point in case
+put differently
+seeing that
+so to speak
+that is to say
+the fact that
+then again
+to be sure
+to put it another way
+to say the least
+truth be told
+ultimately
+under those circumstances
+until and unless
+when all is said and done
+with this in mind
+without a doubt
+without further ado
+worthy of note
+
+# ===========================================================================
+# Common cliché phrases (catch-all from many style guides)
+# ===========================================================================
+avoid like the plague
+back against the wall
+ball in your court
+barking up the wrong tree
+beat around the bush
+beginning of the end
+better late than never
+bit the bullet
+blessing in disguise
+bolt from the blue
+burning question
+calm before the storm
+calm under pressure
+caught red-handed
+checkered past
+clarion call
+clean slate
+clear as day
+cold shoulder
+come full circle
+cornerstone of
+cut to the chase
+day and night
+dead as a doornail
+drop in the bucket
+elephant in the room
+end of the road
+every cloud has a silver lining
+eye opening
+face the music
+fair and square
+fall on deaf ears
+few and far between
+first and foremost
+fishing for compliments
+fit the bill
+flash in the pan
+flew the coop
+forge ahead
+fox in the henhouse
+free as a bird
+fresh as a daisy
+gentle nudge
+gentle reminder
+get our ducks in a row
+get the show on the road
+gild the lily
+give and take
+gloss over
+go the extra mile
+good as gold
+grass is always greener
+hammered home
+hands down
+happy as a clam
+hard pill to swallow
+head over heels
+hit the nail on the head
+hit the ground running
+hold the line
+hook line and sinker
+ignorance is bliss
+in a world of
+in the blink of an eye
+in the same boat
+it goes without saying
+jump the gun
+jumped at the chance
+keep an eye on
+know the ropes
+last but not least
+left no stone unturned
+let the cat out of the bag
+let us be clear
+level playing field
+light at the end of the tunnel
+like a kid in a candy store
+long and short of it
+look before you leap
+lose track
+makes perfect sense
+methods to the madness
+missed the boat
+moving forward
+nipping at the heels
+nip it in the bud
+nose to the grindstone
+not rocket science
+off the top of my head
+on cloud nine
+on the back burner
+on the same page
+once in a lifetime
+one fell swoop
+only time will tell
+open the kimono
+out of the woods
+par for the course
+pass with flying colors
+perfect storm
+playing with fire
+poke fun at
+pop the question
+pot calling the kettle
+pull out all the stops
+push comes to shove
+put it lightly
+quiet before the storm
+read between the lines
+real eye opener
+right as rain
+rise and shine
+rob peter to pay paul
+rollercoaster of emotions
+room to grow
+rule of thumb
+saved by the bell
+sea change
+second to none
+see eye to eye
+set in stone
+shed some light
+sight for sore eyes
+silver lining
+since the dawn of
+smooth sailing
+snowball effect
+so to speak
+something for everyone
+stab in the back
+stay the course
+stick to your guns
+stole the show
+take a back seat
+take it for granted
+take it with a grain of salt
+takes two to tango
+test the waters
+the apple of my eye
+the be-all
+the bottom line
+the cold light of day
+the cream of the crop
+the early bird
+the elephant in the room
+the end-all
+the final analysis
+the final count
+the grand scheme
+the greater good
+the heat of the moment
+the icing on the cake
+the last straw
+the lay of the land
+the lesser of two evils
+the long haul
+the nick of time
+the other side of the coin
+the plot thickens
+the powers that be
+the real deal
+the same page
+the short end of the stick
+the sky is the limit
+the tip of the iceberg
+the whole nine yards
+the whole shebang
+there is no denying
+there is something to be said
+think outside the box
+third time's the charm
+thorn in my side
+through thick and thin
+throw caution to the wind
+time and time again
+time will tell
+tip of the iceberg
+tongue in cheek
+too good to be true
+touch and go
+tried and true
+turn a blind eye
+turn over a new leaf
+twist of fate
+uphill battle
+up in arms
+vanishing point
+varying degrees
+wait and see
+wake-up call
+walking on eggshells
+warm and fuzzy
+watch your back
+water under the bridge
+weather the storm
+weigh the options
+when push comes to shove
+when the dust settles
+wild goose chase
+wishful thinking
+wolf in sheep's clothing
+words cannot express
+word to the wise
+worth its weight in gold
+yankee ingenuity
+you can't judge a book
+youth is wasted
+
+# ===========================================================================
+# Self-help / nonfiction phrase slop
+# ===========================================================================
+a powerful reminder
 a testament to
-pave the way
-paved the way
-paves the way
-shed light on
-sheds light on
-shedding light on
-break new ground
-broke new ground
-breaking new ground
-break boundaries
+acts as a beacon
+acts as a catalyst
 breaking barriers
-unlock the potential
-unlock your potential
-unlock its potential
-unlock the power
-unlock your power
-unlock the secrets
-unlock the mysteries
+breaking new ground
+broke new ground
+carry profound
+change the way you
+changes the way you
+changed the way you
+chart a course
+charts a new course
+delve into
+delving into
+does more than just
+far-reaching implications
+holds the key
+in the pursuit of
+invites the reader
+journey of self-discovery
+mastery of
+means more than
+modern life demands
+more than just
+newfound
+offers a glimpse
+opens doors
+paints a vivid picture
+paves the way
+paved the way
+plays a crucial role
+plays a pivotal role
+points the way
+revolutionize the way
+serve as a catalyst
+sheds light on
+sheds new light
+sparks a journey
+stands as a testament
+stands the test of time
+struck a chord
+swept up in
+touched a nerve
+transform your life
+unlocks the power of
+ushers in
+ushering in
+vivid tapestry
+waves of change
+weight of expectations
+where possibility meets
+will change the way

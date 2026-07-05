@@ -43,7 +43,7 @@ Run on every chapter after polish, and on the full manuscript after the draft sw
 
 ## Immune System 2 — LLM judge (separate persona)
 
-The judge is a **different persona** from the writer. Switch explicitly. The principle from autonovel: *"Different judge: Evaluation model should differ from writing model when possible to avoid self-congratulation bias."* We can't spawn a different model, so the separation is enforced by persona switching + harsh calibration + "score what's on the page, not what you intended."
+The judge is a **different persona** from the writer. Switch explicitly. The principle is industry-standard for AI evaluation: the writer never judges its own work, because self-evaluation drifts generous. We can't spawn a different model in a skill context, so the separation is enforced by persona switching + the harsh calibration below + the rule "score what's on the page, not what you intended." For maximum independence, the dual-persona review in revision can be run in a fresh ZCode turn with no prior conversation history.
 
 ### Judge system prompt
 
@@ -70,18 +70,29 @@ Nonfiction chapter: `clarity`, `voice_adherence`, `claim_support` (capped at 6 i
 
 ### Harsh calibration (the anti-inflation core)
 
-> **9–10:** Could not improve this with a month of focused editorial work. Reserve 10 for work that **surprises** you.
-> **7–8:** Strong. A score of 8+ requires **zero major gaps**.
-> **5–6:** Competent but unremarkable. The median AI output.
-> **Below 5:** Real problems.
+LLM judges inflate. Fight it. Score against the bands below, and remember: a 7 is a chapter you'd be pleased to find in a published book. A 9 is something you'd quote. A 10 is reserved for work that did something you didn't think the medium could do. Almost nothing is a 10.
 
-### FINAL CHECK (always apply)
+| Band | Meaning |
+|---|---|
+| **9.0–10.0** | Exceptional. You would save this chapter to reread. You can name the published books it belongs beside. Anything below genuine surprise is an 8 or lower. |
+| **7.5–8.9** | Strong. Publishable with light edit. Zero major defects allowed here — even one structural problem caps the score at 7. |
+| **6.0–7.4** | Solid. Functional, readable, but unremarkable. This is where most competent AI drafting lands. A perfectly acceptable floor for a first draft. |
+| **4.0–5.9** | Underbuilt. The chapter works at the level of summary or sketch; a human writer would have to invent substantial material to make it real. |
+| **Below 4.0** | Broken. Structural failure, incoherence, or generic to the point of being interchangeable with any other AI draft. |
 
-> If your overall_score is above 7, re-read your gap lists. If any gap describes a problem that would force a writer to stop and invent something during drafting, your score is too high. Revise down.
+The median for a competent AI-drafted chapter should sit around 6.0–6.5. Anything above 7 means the chapter did something most AI drafts don't. Anything above 8 means a human editor would keep it as-is. Treat 8+ scores with suspicion until you've found the gap you can't fix.
 
-### Forced gaps
+### Forced gaps (the engine of honesty)
 
-For **every** dimension, the judge must identify the weakest moment in the chapter and a concrete fix. No dimension gets a free pass. This is what prevents "everything is fine" outputs.
+Before scoring **any** dimension, the judge must name, in one or two sentences:
+- The single weakest moment in that dimension (a quote, a scene, a beat).
+- The specific change that would lift it.
+
+If the judge can't find a weakness in a dimension, it must explain why — and the explanation must be specific, not "it's all good." Dimensions without an identified weakness are scored at 7 max. This is what prevents "everything is fine" outputs that defeat the whole loop.
+
+### The forced re-read (apply to any score above 7)
+
+After scoring, the judge re-reads its own gap list. If any gap names a problem that would force the writer to invent something mid-draft — a missing rule, an undefined character, a scene the outline promises but the foundation doesn't support — the score comes down. A book whose foundation forces invention under pressure is not a 7+. This is the single most important check; do not skip it.
 
 ### Output format (JSON, no fences)
 
