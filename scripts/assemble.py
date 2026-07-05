@@ -20,6 +20,14 @@ import sys
 
 CHAPTER_RE = re.compile(r"ch_(\d+)\.md$", re.IGNORECASE)
 HEADING_RE = re.compile(r"^#{1,3}\s+(.*)$", re.MULTILINE)
+NUMBERED_HEADING_RE = re.compile(r"^chapter\s+\d+\b", re.IGNORECASE)
+
+
+def _numbered_label(num: "int | None", heading: str) -> str:
+    """Chapter label for listings — avoids doubling when heading already reads 'Chapter N: ...'."""
+    if NUMBERED_HEADING_RE.match(heading):
+        return heading
+    return f"Chapter {num if num else '?'}: {heading}"
 
 
 def natural_chapter_sort(path: str) -> tuple[int, str]:
@@ -63,7 +71,7 @@ def assemble(chapters: list[str], out_path: str, title: str | None) -> tuple[int
         # Extract chapter number from filename for TOC ordering
         m = CHAPTER_RE.search(os.path.basename(path))
         num = int(m.group(1)) if m else None
-        toc_entry = f"- {heading} ({wc:,} words)"
+        toc_entry = f"- {_numbered_label(num, heading)} ({wc:,} words)"
         toc.append(toc_entry)
         parts.append(text)
         parts.append("\n\n---\n")  # chapter separator
@@ -97,7 +105,7 @@ def rebuild_outline(chapters: list[str], book_type: str, out_path: str) -> int:
         wc = word_count(text)
         m = CHAPTER_RE.search(os.path.basename(path))
         num = int(m.group(1)) if m else None
-        lines.append(f"### Chapter {num if num else '?'}: {heading}")
+        lines.append(f"### {_numbered_label(num, heading)}")
         lines.append(f"- Word count: {wc:,}")
         lines.append(f"- Beats: <fill in from the chapter>")
         lines.append("")
@@ -132,7 +140,7 @@ def arc_summary(chapters: list[str], out_path: str) -> int:
         wc = word_count(text)
         m = CHAPTER_RE.search(os.path.basename(path))
         num = int(m.group(1)) if m else None
-        lines.append(f"## Chapter {num if num else '?'}: {heading} ({wc:,} words)")
+        lines.append(f"## {_numbered_label(num, heading)} ({wc:,} words)")
         lines.append("")
         lines.append(f"<one-paragraph summary of what happens / what's argued in this chapter>")
         lines.append("")
