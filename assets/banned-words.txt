@@ -1,0 +1,188 @@
+# book-forge banned-word lexicon
+#
+# Sourced verbatim from autonovel's evaluate.py TIER1_BANNED + TIER2_SUSPICIOUS
+# lists, plus TIER3 filler phrases, augmented with authorclaw's mechanical-
+# screen lexicons (writing-judge.ts) and genre/usage extensions. slop_scan.py
+# reads this file.
+#
+# Format:
+#   - Lines starting with # are comments; blank lines ignored.
+#   - Single-word entries (no space) = Tier 1, matched case-insensitively as
+#     whole words.
+#   - Multi-word entries (contain a space) = Tier 3 phrases, matched as
+#     case-insensitive substrings.
+#   - Add project-specific bans to the project's .book-forge/banned-words.txt.
+
+# ===== TIER 1 — autonovel "kill on sight" (corporate-AI vocabulary) =====
+delve
+delved
+delving
+utilize
+utilized
+utilizing
+leverage
+leveraged
+leveraging
+facilitate
+facilitated
+elucidate
+embark
+endeavor
+encompass
+multifaceted
+tapestry
+paradigm
+synergy
+synergize
+holistic
+catalyze
+catalyst
+juxtapose
+myriad
+plethora
+
+# ===== TIER 2 — autonovel "suspicious in clusters" =====
+robust
+comprehensive
+seamless
+seamlessly
+cutting-edge
+innovative
+innovate
+streamline
+empower
+foster
+enhance
+elevate
+optimize
+pivotal
+intricate
+profound
+resonate
+underscore
+harness
+cultivate
+bolster
+galvanize
+cornerstone
+game-changer
+scalable
+nuanced
+
+# ===== authorclaw mechanical-screen additions (writing-judge.ts) =====
+visceral
+beacon
+realm
+realms
+landscape
+navigate
+
+# ===== Fiction stock vocabulary =====
+ancient
+mystical
+powerful
+mysterious
+destiny
+eternal
+legendary
+mythic
+timeless
+sacred
+forbidden
+cursed
+blessed
+enchanted
+forgotten
+shadows
+darkness
+
+# ===== Self-help / nonfiction slop =====
+abundance
+vibration
+vibrational
+manifest
+manifesting
+manifestation
+align
+aligned
+intention
+intentional
+authentic
+authenticity
+grit
+resilient
+resilience
+mindful
+mindfulness
+unlock
+unlocked
+unlocking
+transform
+transformed
+transforming
+transformative
+
+# ===== TIER 3 — autonovel filler phrases (matched as substrings) =====
+it's worth noting that
+it is worth noting that
+it's important to note that
+it is important to note that
+it's worth mentioning that
+let's dive into
+lets dive into
+let's explore
+as we can see
+at the end of the day
+it goes without saying
+when it comes to
+in the realm of
+one might argue that
+it could be suggested that
+this begs the question
+in today's fast-paced
+in today's digital
+in today's modern
+in today's complex
+not just
+but also
+
+# ===== authorclaw banned cliches (writing-judge.ts) =====
+tip of the iceberg
+in the blink of an eye
+butterflies in stomach
+heart skipped a beat
+no stone unturned
+calm before the storm
+only time will tell
+deafening silence
+for what felt like hours
+for what felt like an eternity
+eyes bored into
+eyes drilled into
+
+# ===== Self-help / nonfiction phrase slop =====
+in today's world
+plays a crucial role
+plays a vital role
+plays a key role
+plays a critical role
+plays a pivotal role
+a testament to
+pave the way
+paved the way
+paves the way
+shed light on
+sheds light on
+shedding light on
+break new ground
+broke new ground
+breaking new ground
+break boundaries
+breaking barriers
+unlock the potential
+unlock your potential
+unlock its potential
+unlock the power
+unlock your power
+unlock the secrets
+unlock the mysteries

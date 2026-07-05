@@ -1,0 +1,32 @@
+{
+  "name": "book-forge",
+  "version": "1.0.0",
+  "description": "An autonomous book-writing skill for AI coding agents. Plans, writes, revises, exports, and publishes full-length fiction, nonfiction, and self-help books. Ports autonovel + authorclaw methodology. Works in Claude Code, Factory Droid, OpenCode, Kimi CLI, OpenClaw, Hermes Agent, and ZCode.",
+  "license": "MIT",
+  "author": "book-forge",
+  "keywords": [
+    "ai", "agent", "skill", "skills", "book", "novel", "writing",
+    "fiction", "nonfiction", "self-help", "publishing", "kdp",
+    "claude-code", "factory-droid", "opencode", "kimi", "openclaw",
+    "hermes", "zcode", "agent-skills"
+  ],
+  "bin": {
+    "book-forge": "./bin/cli.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "references/",
+    "assets/",
+    "scripts/",
+    "bin/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node ./bin/cli.mjs"
+  }
+}

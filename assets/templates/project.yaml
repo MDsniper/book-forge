@@ -1,0 +1,19 @@
+# Project metadata for book-forge. Edit by hand or via the seed phase.
+title: null
+subtitle: null
+author: null              # pen name or real name
+book_type: fiction        # fiction | nonfiction | self-help
+genre: null
+subgenre: null
+audience: null            # adult | ya | children | professional | general
+framework: save-the-cat   # save-the-cat | story-circle | 7-point | mice | argument-arc
+targets:
+  chapters: 22
+  words_per_chapter: 3000
+  total_words: 66000
+status: seed              # seed | foundation | drafting | revision | export | complete
+deadline: null            # ISO date or null
+daily_goal: 1000          # words/day if you track pace
+series: null              # series name or null
+series_position: null     # book N in series, or null
+comps: []                 # comparable titles, list

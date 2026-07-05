@@ -1,0 +1,21 @@
+# Seed concept
+
+A good seed has FOUR things: a world-differentiator, a central tension, a cost/constraint, and a sensory/human hook. Reject generic fare (chosen-one, dark lord, medieval-Europe-plus-elves for fiction; "mindfulness will fix you" for self-help).
+
+## One-line pitch
+<the pitch>
+
+## World-differentiator (what makes this world unlike any other)
+<the differentiator>
+
+## Central tension (what opposing forces create the engine of the story/argument)
+<the tension>
+
+## Cost / constraint (what limits the protagonist or the thesis)
+<the cost>
+
+## Sensory / human hook (the concrete image or person that grounds it)
+<the hook>
+
+## Why this, why now
+<the reason this book exists and matters>

@@ -1,0 +1,25 @@
+# book-forge .npmignore
+# Smaller than .gitignore — only excludes things that should never ship to npm.
+
+# Tests / dev (none yet, but reserved)
+test/
+tests/
+__pycache__/
+*.pyc
+
+# Git metadata (npm includes .git by default; exclude it)
+.git
+.gitignore
+.github/
+
+# Local dev artifacts
+.DS_Store
+*.log
+
+# This file itself is meta
+.npmignore
+
+# OS / editor
+.vscode/
+.idea/
+*.swp

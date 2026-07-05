@@ -1,0 +1,110 @@
+# book-forge AI-tell pattern lexicon
+#
+# Sourced verbatim from autonovel's evaluate.py FICTION_AI_TELLS +
+# STRUCTURAL_AI_TICS + TELLING_PATTERNS, augmented with authorclaw's
+# writing-judge.ts AI-tell regexes. slop_scan.py compiles each line as a
+# regex with re.IGNORECASE.
+#
+# One regex per line. Blank lines and lines starting with # are ignored.
+
+# ===== autonovel FICTION_AI_TELLS (the canonical list) =====
+a sense of \w+
+couldn't help but feel
+couldn't help but \w+
+the weight of \w+
+the air was thick with
+eyes widened
+eyes narrowed
+eyes flashed
+eyes sparked
+eyes darkened
+eyes lit up
+a wave of \w+ washed over
+a pang of \w+
+heart pounded in (?:his|her|their) chest
+heart hammered in (?:his|her|their) chest
+heart raced in (?:his|her|their) chest
+(?:raven|dark|golden|silver|silken|auburn|raven-black|snow-white) (?:hair|tresses) (?:spilled|cascaded|tumbled|fell|framed|flowed)
+piercing (?:blue|green|gray|grey|dark) eyes
+a knowing (?:smile|grin|look|glance)
+(?:he|she|they) felt a (?:surge|rush|wave|pang|flicker) of
+the silence (?:was|hung|stretched|grew) (?:heavy|thick|oppressive|deafening)
+let out a breath (?:he|she|they) didn'?t (?:know|realize)
+something (?:dark|ancient|primal|unnamed) stirred
+
+# ===== autonovel STRUCTURAL_AI_TICS =====
+(?:I'm|I am) not (?:saying|asking|suggesting) .{3,40}(?:I'm|I am) (?:saying|asking|suggesting)
+(?:which|that) means either .{3,40} or
+[Tt]here'?s a (?:difference|distinction)\.
+[Tt]hose are (?:different|not the same) things\.
+[Nn]ot (?:just|merely|simply) .{3,40}, but
+[Nn]ot (?:from|by|because of) .{3,40}, but (?:from|by|because)
+
+# ===== autonovel TELLING_PATTERNS (show-don't-tell violations) =====
+\b(?:he|she|they|it|i|we) felt\b
+\b(?:he|she|they) was (?:angry|sad|happy|afraid|scared|tired|relieved|confused|surprised|excited|disgusted)\b
+\b(?:he|she|they) knew that\b
+\b(?:he|she|they) saw that\b
+\b(?:he|she|they) realized that\b
+\b(?:he|she|they|it|i|we|[A-Z]\w+) (?:felt|was|seemed|looked|appeared) (?:angry|sad|happy|scared|nervous|excited|jealous|guilty|anxious|lonely|desperate|furious|terrified|elated|miserable|hopeful|confused|relieved|horrified|disgusted|ashamed|proud|bitter|defeated|triumphant)\b
+\b(?:angrily|sadly|happily|nervously|excitedly|desperately|furiously|anxiously|guiltily|bitterly|wearily|miserably)\b
+
+# ===== authorclaw writing-judge.ts AI-tell regexes =====
+delve into
+tapestry of
+testament to
+navigate the
+navigate this
+multifaceted
+myriad of
+resonate with
+resonate deeply
+in today's
+today's \w+ landscape
+underscores the
+underscores that
+journey of self-discovery
+
+# ===== authorclaw filter words =====
+\b(?:he|she|they|i|we) (?:saw|heard|felt|smelled|tasted|noticed|watched|thought|realized|wondered|decided|knew|understood|seemed|appeared|observed)\b
+
+# ===== More physiological / emotional cliché clusters =====
+a shiver ran down (?:her|his|their|my) spine
+(?:her|his|their) pulse (?:quickened|raced|hammered)
+(?:her|his|their) jaw (?:clenched|tightened|set)
+(?:her|his|their) throat (?:tightened|constricted|closed)
+(?:her|his|their) stomach (?:clenched|dropped|knotted|turned)
+(?:her|his|their) breath (?:hitched|caught|stopped|quickened)
+(?:her|his|their) heart (?:skipped|hammered|raced|pounded)
+goosebumps (?:rose|prickled|formed)
+
+# ===== Structural / rhetorical slop =====
+not just \w+, but
+not only .*, but also
+something shifted between (?:them|us|the two)
+the air (?:hung|felt) heavy
+(?:the|a) silence (?:stretched|grew|lengthened|hung)
+(?:time|the world) seemed to (?:slow|stop)
+in that moment,?
+(?:everything|the world) changed
+(?:it|that) was the moment
+(?:she|he|they) would never (?:be the same|look at .* the same way)
+for a (?:long )?moment,?
+(?:with|in) a (?:sudden|swift|single) (?:movement|motion)
+almost (?:as if|like)
+as if (?:to|on cue)
+somehow,?
+(?:a|the) part of (?:her|him|them) (?:knew|recognized|understood)
+
+# ===== Nonfiction / structural-prose slop =====
+plays a (?:crucial|vital|key|critical|pivotal) (?:role|part)
+it goes without saying
+needless to say
+for what it'?s worth
+by no means
+in other words
+as mentioned (?:earlier|previously|above)
+as (?:we|i) (?:have|'?ve) (?:seen|discussed|noted)
+as (?:we|i) (?:will|'?ll) (?:see|discuss|explore)
+set the stage for
+the stage is set

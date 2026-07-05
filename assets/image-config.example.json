@@ -1,0 +1,47 @@
+{
+  "_comment": "Copy this file to .book-forge/image-config.json (project) or ~/.config/book-forge/image-config.json (user). Fill in only the provider(s) you have. API keys can also be set via env vars (OPENAI_API_KEY, etc.) which take precedence over this file.",
+
+  "openai": {
+    "_comment": "Best for covers per authorclaw testing. Strong at rendering title text.",
+    "api_key": "",
+    "model": "gpt-image-1"
+  },
+
+  "ideogram": {
+    "_comment": "Best at rendering text on the image. Recommended when the title must be on the cover.",
+    "api_key": "",
+    "model": "v2"
+  },
+
+  "google": {
+    "_comment": "Google Imagen. Use the Gemini API key path (GOOGLE_GENAI_API_KEY) for simplest setup; Vertex AI via gcloud also works.",
+    "api_key": "",
+    "project": "",
+    "location": "us-central1",
+    "model": "imagen-4.0-generate-001"
+  },
+
+  "fal": {
+    "_comment": "fal.ai — Flux and many models. autonovel uses this for cover art.",
+    "api_key": "",
+    "model": "fal-ai/flux/1.1-pro"
+  },
+
+  "stability": {
+    "_comment": "Stability AI — Stable Diffusion 3.",
+    "api_key": "",
+    "model": "sd3-large"
+  },
+
+  "replicate": {
+    "_comment": "Replicate — many models including Flux and SDXL.",
+    "api_token": "",
+    "model": "black-forest-labs/flux-1.1-pro"
+  },
+
+  "comfyui": {
+    "_comment": "Self-hosted, free. Run ComfyUI locally, point this at it. Optionally provide a workflow JSON (with parametrized CLIPTextEncode 'Positive prompt' and EmptyLatentImage nodes).",
+    "url": "http://127.0.0.1:8188",
+    "workflow": ""
+  }
+}
