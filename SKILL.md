@@ -86,7 +86,7 @@ On every invocation:
 
 1. **Read `state.json`** in the current working directory.
    - If absent → run the **seed** entrypoint (below) to scaffold a new book.
-   - If present → confirm with the user whether to **resume** the current phase or **jump** to a named phase (`seed | foundation | drafting | revision | export`). Default: resume.
+   - If present → confirm with the user whether to **resume** the current phase or **jump** to a named phase (`seed | foundation | drafting | revision | export | publish`). Default: resume.
 2. **Run that one phase** with all quality machinery on. Do **not** cascade into later phases automatically — return control to the user between phases.
 3. **Save `state.json`**, commit keeps to git, append `results.tsv`.
 4. Tell the user exactly what to invoke next.
@@ -153,7 +153,7 @@ Read `references/export.md` for the full procedure. Run `scripts/export.py <form
 - Print: `/skill book-forge publish`.
 
 ### `publish` — make it sellable
-Read `references/publish.md` for the full procedure. Turns an exported manuscript into a sellable book. Run `scripts/publish.py all` (or per-command: `copyright`, `cover-spec`, `pricing`, `metadata`, `disclaimers`, `checklist`) which generates:
+Read `references/publish.md` for the full procedure. Turns an exported manuscript into a sellable book. Run `scripts/publish.py all` (or per-command: `copyright`, `cover-spec`, `pricing`, `metadata`, `disclaimers`, `checklist`, `validate-targets`) which generates:
 1. **Real copyright page** (ISBN-stamped, disclaimer-correct for the book_type: fiction / self-help / memoir / nonfiction).
 2. **Cover spec sheet** (exact print-cover dimensions from trim + page count + paper; ebook 1600×2560; spine math).
 3. **Pricing recommendation** (KDP 35%/70% royalty math at candidate prices; print minimum viable price; genre norms).

@@ -578,6 +578,12 @@ def cmd_brief(brief_type: str) -> int:
 
 
 def cmd_generate(args, cfg: dict) -> int:
+    if not args.brief:
+        print(f"{args.command}: a brief file or inline prompt is required.\n"
+              f"Scaffold one first: image.py brief "
+              f"{args.command if args.command in BRIEF_TEMPLATES else 'cover'}",
+              file=sys.stderr)
+        return 2
     # Read brief from file or treat arg as inline prompt
     prompt = args.brief
     if os.path.isfile(args.brief):

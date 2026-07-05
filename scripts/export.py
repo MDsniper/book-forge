@@ -54,6 +54,21 @@ def latex_available() -> str | None:
 # Metadata
 # --------------------------------------------------------------------------- #
 
+def _yaml_scalar(raw: str) -> str:
+    """Extract a YAML scalar, stripping a trailing unquoted '#' comment."""
+    raw = raw.strip()
+    if raw[:1] in ("'", '"'):
+        quote = raw[0]
+        end = raw.find(quote, 1)
+        return raw[1:end] if end != -1 else raw[1:]
+    idx = raw.find(" #")
+    if idx != -1:
+        raw = raw[:idx]
+    elif raw.startswith("#"):
+        raw = ""
+    return raw.strip()
+
+
 def load_metadata() -> dict:
     """Pull title/author/author from project.yaml or state.json."""
     meta: dict[str, str | None] = {
@@ -66,8 +81,10 @@ def load_metadata() -> dict:
             blob = fh.read()
         for key in ("title", "subtitle", "author", "book_type"):
             m = re.search(rf"^{key}:\s*(\S.*?)\s*$", blob, re.MULTILINE)
-            if m and m.group(1).lower() not in ("null", "none", "~"):
-                meta[key] = m.group(1).strip().strip("'\"")
+            if m:
+                val = _yaml_scalar(m.group(1))
+                if val.lower() not in ("null", "none", "~", ""):
+                    meta[key] = val
     elif os.path.isfile("state.json"):
         import json
         with open("state.json", "r", encoding="utf-8") as fh:

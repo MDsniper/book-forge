@@ -106,12 +106,19 @@ def beats_nonfiction(total: int) -> list[tuple[str, int]]:
 def beats_self_help(total: int) -> list[tuple[str, int]]:
     """Self-help arc: same as nonfiction but with a methods chapter called out."""
     base = beats_nonfiction(total)
-    # Insert a "core method" beat at ~25% if there's room
-    methods_ch = _round_up(0.25, total)
-    # Don't duplicate an existing beat chapter; nudge if collision
+    # Core Method sits between Problem and Framework; keep it there so chapter
+    # numbers stay in ascending order when printed (list position 2).
+    problem_ch, framework_ch = base[1][1], base[2][1]
+    methods_ch = _clamp(_round_up(0.25, total), problem_ch, framework_ch)
     existing = {ch for _, ch in base}
-    if methods_ch in existing:
-        methods_ch = max(1, methods_ch - 1)
+    # Prefer nudging later (project convention: push later, not earlier — see
+    # render()'s Notes), then earlier, without leaving the (Problem, Framework] bracket.
+    search_order = list(range(methods_ch, framework_ch + 1)) + \
+        list(range(methods_ch - 1, problem_ch - 1, -1))
+    for ch in search_order:
+        if ch not in existing:
+            methods_ch = ch
+            break
     base.insert(2, ("Core Method (the technique)", methods_ch))
     return base
 
