@@ -18,6 +18,8 @@
   "prev_novel_score": 0.0,
   "revision_cycle": 0,
   "framework": "save-the-cat",
+  "collaborative_mode": "autonomous",
+  "checkpoints_reached": [],
   "debts": [],
   "created_at": null,
   "updated_at": null

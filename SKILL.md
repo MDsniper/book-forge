@@ -77,24 +77,31 @@ On every invocation:
 
 ### `seed` — start a new book
 - Ask for (or generate) **title**, **book_type** (fiction/nonfiction/self-help), **genre/subgenre**, and **targets** (chapter count, words/chapter, total). Defaults: 22 chapters × 3000 words ≈ 66k words.
+- **Ask: collaborative or autonomous mode?** (`state.json.collaborative_mode`). "Collaborative" runs a ~10-minute interview before foundation and pauses for your review at 3 checkpoints during foundation (and one at revision start). "Autonomous" runs hands-off — the original behavior. See `references/collaborative.md`. Default if unsure: collaborative for nonfiction/self-help/memoir, autonomous for fiction. Either can be changed mid-book.
 - If the user has no concept, generate **10 diverse seed concepts** (reject generic fare: chosen-one, dark lord, medieval-Europe-plus-elves for fiction; vague "mindfulness will fix you" for self-help). A good seed has a **world-differentiator, central tension, cost/constraint, sensory/human hook**. Let the user pick or remix.
-- Write `seed.txt`, copy templates from `assets/templates/` into the cwd, write `project.yaml` and `state.json` (phase=`foundation`, debts=[]), `git init`, initial commit.
+- Write `seed.txt`, copy templates from `assets/templates/` into the cwd (including `interview-answers.md` if collaborative), write `project.yaml` and `state.json` (phase=`foundation`, debts=[], collaborative_mode set), `git init`, initial commit.
+- **If collaborative:** conduct the 15-question interview now, capturing answers verbatim in `interview-answers.md`. Branch questions 6-10 by `book_type`. Then proceed to foundation.
 - Print the next command: `/skill book-forge foundation`.
 
 ### `foundation` — build the substrate (no prose yet)
-Read `references/foundation.md` for the full procedure. Loop until **foundation_score ≥ 7.5 AND (lore_score ≥ 7.0 for fiction, OR research_score ≥ 7.0 for nonfiction/self-help)**, max 20 iterations:
+Read `references/foundation.md` for the full procedure. **If `state.json.collaborative_mode == "collaborative"`, also read `references/collaborative.md`** — the interview answers seed `voice.md` Part 2, `world.md`/`research-bible.md`, `characters.md`/`thesis.md`, `evidence.md`, and the judge's `## Author intent` block. Loop until **foundation_score ≥ 7.5 AND (lore_score ≥ 7.0 for fiction, OR research_score ≥ 7.0 for nonfiction/self-help)**, max 20 iterations:
 
 1. `world.md` (or `research-bible.md`) → `characters.md` → `outline.md` (with **foreshadowing ledger** for fiction / **thread ledger** for nonfiction) → **voice discovery sub-loop** (write 5 trial passages in different registers — mythic/spare/warm/cold/whimsical for fiction, or authority/confessional/coach/lyrical/reportorial for nonfiction — pick the best, fill `voice.md` Part 2 with exemplars + anti-exemplars).
 2. For fiction only: write `MYSTERY.md` (the central secret the reader discovers — **author-only, never loaded into drafting context**).
 3. Build `canon.md` (fiction: target 400+ hard-fact entries; nonfiction/self-help: every claim sourced to evidence, **no fabricated citations** — if a source can't be verified, write "unverified" rather than invent one).
 4. Evaluate. Keep if improved, else `git reset --hard HEAD~1`. Target the weakest dimension next.
 5. Run `scripts/beat_math.py` to confirm structural beats land on real chapters; fix `outline.md` if they don't.
+- **Collaborative checkpoints** (skip if `collaborative_mode == "autonomous"`):
+  - **Checkpoint 1** — pause after `world.md`/`research-bible.md` + `characters.md` first pass. Show them, ask "anything to change?", loop until "looks good" (cap 3 rounds). Record `"cp1_world"` in `state.json.checkpoints_reached`.
+  - **Checkpoint 2** — pause after voice discovery picks a winner. Show the 5 trial passages + chosen register, ask "right voice?", loop until satisfied (cap 2 rounds). Record `"cp2_voice"`.
+  - **Checkpoint 3** — pause after `outline.md` is complete and beat math validates. Show beats + ledger + beat map, ask "ready to draft, or structural notes?", loop until "looks good, draft" (cap 4 rounds). This is the most important checkpoint. Record `"cp3_outline"`.
+  - Full protocol: `references/collaborative.md`.
 - Print: `/skill book-forge drafting`.
 
 ### `drafting` — write the book, forward progress over perfection
 Read `references/drafting.md` for the full procedure. For each chapter in outline order, loop until **chapter_score > 6.0** or **5 attempts**:
 
-1. **Assemble the context window** (in order): full `voice.md` → this chapter's outline beats → next chapter's outline (continuity) → previous chapter's last ~2000 chars → `world.md`/`research-bible.md` → `characters.md` → `canon.md` → the 24 drafting instructions in `references/drafting.md`.
+1. **Assemble the context window** (in order): full `voice.md` → this chapter's outline beats → next chapter's outline (continuity) → previous chapter's last ~2000 chars → `world.md`/`research-bible.md` → `characters.md` → `canon.md` → the chapter-drafting directives in `references/drafting.md`.
 2. **Write** the FULL chapter. Anti-summarize rules are load-bearing — see `references/drafting.md`. Write at least the target word count.
 3. **Polish** in a separate pass: "produce a REVISED, POLISHED version of THE ENTIRE chapter. Do not shorten. Do not add commentary. Start directly with the prose."
 4. Run `scripts/slop_scan.py`, then the LLM judge (separate persona). Score = judge − slop_penalty. Apply stability-trap countermeasures from `references/quality.md`.
@@ -107,6 +114,7 @@ Read `references/drafting.md` for the full procedure. For each chapter in outlin
 ### `revision` — the deep pass
 Read `references/revision.md` for the full procedure. **3–6 cycles**, stop on plateau (|Δ score| < 0.3 after ≥ 3 cycles):
 
+0. **Collaborative checkpoint 4 (revision gate)** — if `collaborative_mode == "collaborative"` and `"cp4_revision"` not yet in `checkpoints_reached`: show the user `arc_summary.md` (one paragraph per chapter), the full-manuscript slop score, and the 3 lowest-scoring chapters with judge notes. Ask: "anything to redirect — chapters to restructure, scenes to add/cut, characters to deepen? Your notes become priority consensus items alongside the reader panel." Apply their notes as additional briefs with priority weighting. Record `"cp4_revision"`.
 1. **Adversarial cut analysis** — as a ruthless editor, ask "what would I cut to lose 500 words?" What you'd cut **is** the revision plan. Expect ~30% OVER-EXPLAIN, ~25% REDUNDANT.
 2. **Reader/beta panel** — 4 personas as **parallel subagents**:
    - **The Editor** (prose texture, subtext, sentence craft)
@@ -176,7 +184,7 @@ Read on demand — do **not** preload all of these:
 
 - `references/methodology.md` — the 5-layer + canon model, the modify-evaluate-keep loop, propagation debts, stability trap, anti-inflation philosophy. **Read at the start of any new book.**
 - `references/foundation.md` — full Phase 1 procedure, scoring rubric, voice discovery sub-loop, MICE closure, beat-math usage.
-- `references/drafting.md` — the 24 drafting instructions verbatim, context-window assembly, anti-summarize rules, canon extraction.
+- `references/drafting.md` — the chapter-drafting directives, context-window assembly, anti-summarize rules, canon extraction.
 - `references/revision.md` — adversarial cut analysis, 4-persona panel, brief→revision, apply vs. analyze discipline, plateau math, dual-persona review stopping conditions.
 - `references/quality.md` — the three immune systems verbatim: slop tiers, judge rubric with harsh calibration, reader personas, disagreements-as-decisions.
 - `references/craft.md` — plotting frameworks (Save the Cat, Story Circle, MICE, Sanderson), foreshadowing ledger rules, structural beat math, scene-sequel.
@@ -187,6 +195,7 @@ Read on demand — do **not** preload all of these:
 - `references/images.md` — cover & illustration generation: provider setup (ComfyUI free, Google Imagen, OpenAI, fal.ai, Ideogram, Stability, Replicate), brief writing, text-on-image caveats, cost awareness. **Read before generating images.**
 - `references/launch.md` — the 90-day launch orchestrator, marketing asset bundle, ad copy specs, ARC/comp-title/website strategy.
 - `references/story-structures.md` — the 9 plotting frameworks catalog (Save the Cat, Three-Act, Five-Act, Seven-Point, Hero's Journey, Romancing the Beat, Story Circle, 5-Stage Mystery, Martell Thematic) with beat positions and genre recommendations.
+- `references/collaborative.md` — collaborative mode (interview + 4 checkpoints). **Read at seed time if the user picks collaborative, and again before each checkpoint.**
 
 ## Install / sync (npx)
 
