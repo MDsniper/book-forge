@@ -1,12 +1,29 @@
 # book-forge
 
-An autonomous book-writing skill. Plans, writes, revises, and exports full-length books — **fiction, nonfiction, and self-help** — from a one-line idea to a packaged manuscript.
+An autonomous book-writing skill for AI coding agents. **Plans, writes, revises, exports, publishes, and markets** full-length fiction, nonfiction, and self-help books — from a one-line idea to a packaged manuscript ready for KDP, plus cover art and a 90-day launch marketing kit.
 
 Inspired by the methodology of [autonovel](https://github.com/NousResearch/autonovel) (NousResearch) and the workflow design of [authorclaw](https://github.com/Ckokoski/authorclaw) (Ckokoski, MIT licensed). All expression in this skill is original — see [Credits](#inspiration--credits) and [NOTICE](./NOTICE) for details.
 
-## Works in: ZCode · Claude Code · Factory Droid · OpenCode · Kimi CLI · OpenClaw · Hermes Agent
+## What book-forge does
 
-This skill follows the **Agent Skills standard** (`SKILL.md` + YAML frontmatter + bundled `scripts/`/`references/`/`assets/`), so the same files work across all seven agents. It's installed at:
+Six phases, each one invocation of the skill. You steer between phases.
+
+| Phase | What it produces |
+|---|---|
+| **seed** | `seed.txt`, `project.yaml`, `state.json`, all templates copied, `git init`, optional 15-question interview (collaborative mode) |
+| **foundation** | `world.md`/`research-bible.md`, `characters.md`/`thesis.md`, `outline.md` (with foreshadowing/thread ledger), `voice.md` Part 2, `canon.md`/`evidence.md`, `MYSTERY.md` (fiction) |
+| **drafting** | `chapters/ch_NN.md` — write→polish loop with slop detection + judge evaluation |
+| **revision** | Adversarial cut analysis, 4-persona reader panel, brief→revise, dual-persona final review |
+| **export** | `manuscript.md` + EPUB + DOCX + PDF via pandoc + LaTeX |
+| **publish** | Real copyright page, ISBN-stamped KDP/Ingram metadata, pricing math, cover spec, legal disclaimers, marketing bundle (blurb/ad copy/social/ARC email), 90-day launch timeline |
+
+Five quality "immune systems" run on every chapter: mechanical slop scanner, LLM judge with harsh calibration, reader panel, dual-persona review, and stability-trap countermeasures (forced character change, irreversible loss, information economy, genuine moral cost).
+
+Plus a **provider-agnostic image generator** (`scripts/image.py`) for covers and interior illustrations — supports ComfyUI (free/self-hosted), Google Imagen, OpenAI gpt-image-1, fal.ai, Ideogram, Stability, Replicate.
+
+## Works in 7 agents
+
+The skill follows the **Agent Skills standard** (`SKILL.md` + YAML frontmatter + bundled `scripts/`/`references/`/`assets/`), so the same files work across all seven:
 
 | Agent | Path |
 |---|---|
@@ -18,7 +35,7 @@ This skill follows the **Agent Skills standard** (`SKILL.md` + YAML frontmatter 
 | OpenClaw | `~/.openclaw/skills/book-forge/` |
 | Hermes Agent | `~/.hermes/skills/writing/book-forge/` |
 
-(OpenCode and Kimi also discover `~/.agents/skills/` directly, so the ZCode copy is visible to them too. Hermes organizes skills by category, hence the `writing/` subdir. OpenClaw's `~/.openclaw/skills/` is the user-skills root; built-in skills live under `~/.openclaw/install/skills/`.)
+OpenCode and Kimi also discover `~/.agents/skills/` directly. Hermes organizes skills by category (hence the `writing/` subdir). OpenClaw's `~/.openclaw/skills/` is the user-skills root; built-in skills live under `~/.openclaw/install/skills/`.
 
 ## Quick start
 
@@ -26,36 +43,36 @@ This skill follows the **Agent Skills standard** (`SKILL.md` + YAML frontmatter 
 mkdir ~/Documents/MyBook && cd ~/Documents/MyBook
 ```
 
-Then invoke in your agent of choice (each phase is one invocation):
+Then invoke in your agent:
 
-| Phase | Claude Code / Factory Droid / ZCode | OpenCode | Kimi CLI | OpenClaw / Hermes |
-|---|---|---|---|---|
-| seed (start) | `/book-forge` | "use the book-forge skill to start a book" | `/skill:book-forge` | "use the book-forge skill to start a book" |
-| foundation | `/book-forge foundation` | "continue book-forge foundation phase" | `/skill:book-forge foundation` | "run book-forge foundation phase" |
-| drafting | `/book-forge drafting` | "run book-forge drafting" | `/skill:book-forge drafting` | "run book-forge drafting phase" |
-| revision | `/book-forge revision` | "run book-forge revision" | `/skill:book-forge revision` | "run book-forge revision phase" |
-| export | `/book-forge export` | "run book-forge export" | `/skill:book-forge export` | "run book-forge export phase" |
+| Agent | How |
+|---|---|
+| Claude Code / Factory Droid / ZCode | `/book-forge <phase>` |
+| Kimi CLI | `/skill:book-forge <phase>` |
+| OpenCode / OpenClaw / Hermes | describe what you want — "use the book-forge skill to start a book" |
 
-- **Claude Code / Factory Droid / ZCode:** slash command `/book-forge <phase>`. Auto-triggers from the description if you just say "write a book."
-- **OpenCode:** no slash command for skills — the agent auto-loads it via the `skill` tool, or you can prompt it explicitly.
-- **Kimi CLI:** `/skill:book-forge <phase>` (note the colon).
-- **OpenClaw:** auto-loads from `~/.openclaw/skills/`; invoke from any channel (chat, CLI `openclaw agent`, Control UI) by saying "use the book-forge skill." Scripts run via the `exec` tool (make sure `exec` is in your `tools` allowlist if you set one).
-- **Hermes Agent:** auto-loads from `~/.hermes/skills/writing/`; invoke by saying "use the book-forge skill."
-- All agents: one phase per invocation, then return control.
-
-## Keeping them in sync
-
-The seven copies are independent. To re-sync after editing the canonical copy at `~/.agents/skills/book-forge/`:
-
+**Working npx invocation** (for when you're starting from outside an agent):
 ```bash
-SRC=~/.agents/skills/book-forge
-for dest in ~/.claude/skills ~/.factory/skills ~/.config/opencode/skills \
-            ~/.kimi/skills ~/.openclaw/skills ~/.hermes/skills/writing; do
-  rm -rf "$dest/book-forge" && cp -R "$SRC" "$dest/book-forge"
-done
+npx github:MDsniper/book-forge           # ← this is what works today
+npx github:MDsniper/book-forge --list    # show detected agents, install nothing
+npx github:MDsniper/book-forge --all     # install to ALL targets (even undetected)
+npx github:MDsniper/book-forge --uninstall
 ```
 
-## The model in one breath
+(Note: `npx book-forge` without the `github:` prefix would work if book-forge were on the npm registry. It's not yet — only on GitHub. The skill scripts live at `bin/cli.mjs`; you can also run them locally: `node ~/.agents/skills/book-forge/bin/cli.mjs`.)
+
+**Per-agent invocation cheat sheet:**
+
+| Phase | Claude Code / Factory Droid / ZCode | Kimi CLI | OpenCode | OpenClaw / Hermes |
+|---|---|---|---|---|
+| seed | `/book-forge` | `/skill:book-forge` | "use book-forge to start a book" | "use book-forge to start a book" |
+| foundation | `/book-forge foundation` | `/skill:book-forge foundation` | "run book-forge foundation phase" | "run book-forge foundation phase" |
+| drafting | `/book-forge drafting` | `/skill:book-forge drafting` | "run book-forge drafting" | "run book-forge drafting" |
+| revision | `/book-forge revision` | `/skill:book-forge revision` | "run book-forge revision" | "run book-forge revision" |
+| export | `/book-forge export` | `/skill:book-forge export` | "run book-forge export" | "run book-forge export" |
+| publish | `/book-forge publish` | `/skill:book-forge publish` | "run book-forge publish" | "run book-forge publish" |
+
+## How it works (in one breath)
 
 A book is **five co-evolving layers + one truth-DB**:
 
@@ -66,21 +83,19 @@ A book is **five co-evolving layers + one truth-DB**:
 | `characters.md` | registry, arcs | personas, case figures |
 | `outline.md` | beats + foreshadowing ledger | chapter list + thread ledger |
 | `chapters/ch_NN.md` | the prose | the prose |
-| `canon.md` | hard-facts DB | **claims/evidence DB** (no fabricated citations) |
+| `canon.md` | hard-facts DB | claims/evidence DB (no fabricated citations) |
 
-Every phase is a **modify → evaluate → keep/discard loop**, with git commits as keeps and `git reset --hard HEAD~1` as discards. Three quality "immune systems" run on every chapter and on the full manuscript:
-
-1. **Mechanical slop** — `scripts/slop_scan.py` (regex, no LLM).
-2. **LLM judge** — a separate persona with harsh anti-inflation calibration.
-3. **Reader/beta panel** — 4 personas run as parallel subagents; disagreements are where editorial decisions live. Followed by a dual-persona final review.
+Every phase is a **modify → evaluate → keep/discard loop**: generate in persona, evaluate with the immune systems, keep if improved (commit), discard if worse (`git reset --hard HEAD~1`), target the weakest dimension next.
 
 ## Book types
 
 `state.json.book_type ∈ {fiction, nonfiction, self-help}` routes foundation and revision:
 
-- **fiction** → world-building + 400+ canon entries + foreshadowing ledger (MICE closure) + 4-persona reader panel.
-- **nonfiction** → research bible + every claim sourced + argument/thread ledger + fact-check + Skeptic panelist.
-- **self-help** → as nonfiction, plus Concept→Method→Example→Exercise structure + sensitivity/claimer-of-authority check.
+- **fiction** → world-building + 400+ canon entries + foreshadowing ledger (MICE closure) + 4-persona reader panel
+- **nonfiction** → research bible + every claim sourced + argument/thread ledger + fact-check + Skeptic panelist
+- **self-help** → as nonfiction, plus Concept→Method→Example→Exercise structure + sensitivity/claimer-of-authority check
+
+Plus a **collaborative mode** (`state.json.collaborative_mode`): at seed time, you can pick **collaborative** (15-question interview + 4 review checkpoints during foundation/revision) or **autonomous** (hands-off, original behavior). See `references/collaborative.md`.
 
 ## Dependencies
 
@@ -88,36 +103,52 @@ Every phase is a **modify → evaluate → keep/discard loop**, with git commits
 - **For EPUB/DOCX:** `pandoc` — `brew install pandoc`.
 - **For PDF:** a LaTeX engine — `brew install --cask mactex` (full) or `cargo install tectonic` (lightweight).
 - **Optional:** `epubcheck` — `brew install epubcheck` (validates EPUB output).
+- **For image generation:** at least one of `COMFYUI_URL` (self-hosted), `OPENAI_API_KEY`, `IDEOGRAM_API_KEY`, `GOOGLE_GENAI_API_KEY`, `FAL_KEY`, `STABILITY_API_KEY`, or `REPLICATE_API_TOKEN`.
 
-Export never fails because a tool is missing — it produces what it can and prints the install hint.
+Export never fails because a tool is missing — it produces what it can and prints install hints.
 
 ## Files in this skill
 
 ```
 book-forge/
-├── SKILL.md                  orchestration brain (read this first)
-├── README.md                 this file
-├── references/               load on demand (see SKILL.md for routing)
-│   ├── methodology.md        5-layer+canon model, the loop, stability trap
-│   ├── foundation.md         phase 1 procedure + scoring + voice discovery
-│   ├── drafting.md           phase 2 + the 24 writing instructions + anti-summarize
-│   ├── revision.md           phase 3 + adversarial cut analysis + panel + review
-│   ├── quality.md            the three immune systems verbatim
-│   ├── craft.md              plotting frameworks, foreshadowing ledger, beat math
-│   ├── nonfiction.md         nonfiction & self-help adaptation
-│   ├── export.md             packaging + front/back matter + KDP readiness
-│   └── genres.md             per-genre voice/structure/benchmarks
+├── SKILL.md                     orchestration brain (read this first)
+├── README.md                    this file
+├── NOTICE                       authorclaw MIT attribution + autonovel credit
+├── LICENSE                      MIT
+├── package.json                 npm package metadata
+├── bin/
+│   └── cli.mjs                  npx installer (auto-detects 7 agents)
+├── references/                  load on demand (see SKILL.md)
+│   ├── methodology.md           5-layer+canon model, the loop, stability trap, anti-inflation
+│   ├── foundation.md            phase 1 procedure + scoring + voice discovery + MICE closure
+│   ├── drafting.md              phase 2 — chapter-drafting directives, context-window assembly, anti-summarize
+│   ├── revision.md              phase 3 — adversarial cut analysis, 4-persona panel, dual-persona review, plateau math
+│   ├── quality.md               three immune systems verbatim — slop tiers, judge rubric, reader personas
+│   ├── craft.md                 plotting frameworks, foreshadowing ledger, beat math, scene-sequel
+│   ├── story-structures.md      the 9 plotting frameworks catalog (Save the Cat, Three-Act, etc.)
+│   ├── nonfiction.md            nonfiction & self-help adaptation: research→thesis→evidence→draft→fact-check
+│   ├── genres.md                per-genre voice/structure/benchmarks + word-count norms
+│   ├── collaborative.md         collaborative mode: interview script + 4 checkpoint protocols
+│   ├── images.md                cover & illustration generation — provider setup, brief writing, text-on-image caveats
+│   ├── export.md                packaging + front/back matter + KDP readiness
+│   ├── publish.md               publish phase: ISBN, copyright page, KDP/Ingram, cover spec, pricing, legal
+│   └── launch.md                90-day launch orchestrator + marketing asset bundle
 ├── assets/
-│   ├── templates/            state.json, project.yaml, world.md, characters.md,
-│   │                         outline.md, canon.md, evidence.md, voice.md,
-│   │                         MYSTERY.md, thesis.md, research-bible.md, seed.txt
-│   ├── banned-words.txt      slop lexicon (Tier 1 + 3)
-│   └── ai-tells.txt          regex patterns for AI fiction tells
-└── scripts/
-    ├── slop_scan.py          mechanical slop scanner (0-10 penalty)
-    ├── beat_math.py          structural-beat calculator
-    ├── assemble.py           chapters/ → manuscript.md, rebuild outline/arc
-    └── export.py             pandoc EPUB/DOCX + LaTeX PDF
+│   ├── templates/               scaffolded into a new book folder at seed time
+│   │   ├── state.json, project.yaml, seed.txt, voice.md
+│   │   ├── world.md, research-bible.md, characters.md, outline.md
+│   │   ├── canon.md, evidence.md, MYSTERY.md, thesis.md
+│   │   └── interview-answers.md   (collaborative mode only)
+│   ├── banned-words.txt         slop lexicon (Tier 1, Tier 2, fiction, self-help, Tier 3 phrases)
+│   ├── ai-tells.txt             regex patterns (sensory cliché, physiological, structural tic, telling verb, filter, nonfiction)
+│   └── image-config.example.json  template for any/all of 7 image providers
+└── scripts/                     pure stdlib Python 3.9+
+    ├── slop_scan.py             mechanical slop scanner (0-10 penalty)
+    ├── beat_math.py             structural-beat calculator (fiction + nonfiction)
+    ├── assemble.py              chapters/ → manuscript.md, rebuild outline/arc
+    ├── export.py                pandoc EPUB/DOCX + LaTeX PDF, graceful-skip on missing tools
+    ├── publish.py               copyright page, cover spec, pricing, KDP/Ingram metadata, legal disclaimers, checklist
+    └── image.py                 cover/illustration generation via 7 providers, graceful-skip on no key
 ```
 
 ## Per-book structure (created by the seed phase)
@@ -125,21 +156,24 @@ book-forge/
 ```
 MyBook/
 ├── .book-forge/
-│   ├── banned-words.txt      project-specific slop overrides (optional)
-│   └── ai-tells.txt          project-specific tell overrides (optional)
+│   ├── banned-words.txt           project-specific slop overrides (optional)
+│   └── ai-tells.txt               project-specific tell overrides (optional)
 ├── seed.txt
-├── state.json                master phase tracker
-├── project.yaml              metadata
+├── interview-answers.md           only if collaborative mode was chosen
+├── state.json                     master phase tracker (phase, scores, debts, mode, checkpoints_reached)
+├── project.yaml                   metadata (title, author, book_type, targets)
 ├── voice.md, world.md (or research-bible.md), characters.md
 ├── outline.md (with ledger), canon.md (or evidence.md)
 ├── MYSTERY.md (fiction) / thesis.md (nonfiction)
 ├── chapters/
 │   └── ch_01.md ... ch_NN.md
-├── briefs/                   revision briefs
-├── manuscript.md             assembled (after export)
+├── briefs/                        revision briefs
+├── arc_summary.md                 one-paragraph-per-chapter summary (rebuilt after drafting)
+├── manuscript.md                  assembled book (after export)
 ├── front-matter.md, back-matter.md
-├── results.tsv               audit log (every keep/discard)
-└── exports/                  final EPUB / DOCX / PDF
+├── results.tsv                    audit log (every keep/discard/cycle)
+├── publish/                       publish phase output (copyright, cover spec, pricing, metadata, marketing)
+└── exports/                       final .epub / .docx / .pdf
 ```
 
 ## Inspiration & credits

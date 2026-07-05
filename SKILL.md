@@ -1,6 +1,6 @@
 ---
 name: book-forge
-description: Autonomously plan, write, revise, and export full-length books — fiction, nonfiction, and self-help. Use whenever the user wants to write a novel, novella, memoir, narrative nonfiction, how-to, prescriptive self-help, or any book-length manuscript; to outline or world-build one; to revise/draft existing chapters; or to package a manuscript into EPUB/DOCX/PDF. Trigger on phrases like "write a book", "novel", "outline a story", "book bible", "revise my manuscript", "beta readers", "self-help book", "nonfiction book", "format for KDP".
+description: Plan, write, revise, export, publish, and market full-length books — fiction, nonfiction, and self-help. Use whenever the user wants to write a novel, novella, memoir, narrative nonfiction, how-to, prescriptive self-help, or any book-length manuscript; to outline or world-build one; to revise/draft existing chapters; to package a manuscript into EPUB/DOCX/PDF; to generate cover art or interior illustrations; to produce a copyright page / ISBN / KDP or IngramSpark metadata; to build a 90-day launch marketing kit (blurb, ad copy, social posts, ARC outreach); or to run a 4-persona beta reader panel and dual-persona review. Two modes: autonomous (hands-off) and collaborative (15-question interview plus 4 review checkpoints). Trigger on phrases like "write a book", "novel", "outline a story", "book bible", "revise my manuscript", "beta readers", "self-help book", "nonfiction book", "format for KDP", "publish on Amazon", "make me a cover", "launch a book".
 version: 1.0.0
 author: book-forge
 license: MIT
@@ -15,18 +15,34 @@ It faithfully ports the methodology of **autonovel** (NousResearch) and folds in
 
 ## How to invoke scripts (IMPORTANT — read this)
 
-Every helper script lives in this skill's `scripts/` directory. The Bash tool's working directory is the **book folder** (the user's `cwd`), NOT the skill folder — so never write `python scripts/foo.py`. Instead, resolve the skill directory first:
+Every helper script lives in this skill's `scripts/` directory. The Bash tool's working directory is the **book folder** (the user's `cwd`), NOT the skill folder — so never write `python scripts/foo.py` from the book folder; it won't resolve.
 
-- **Claude Code:** scripts are at `${CLAUDE_SKILL_DIR}/scripts/`. Run e.g. `python3 ${CLAUDE_SKILL_DIR}/scripts/slop_scan.py chapters/ch_01.md`.
-- **All tools:** if no skill-dir env var is set, the script directory is the absolute path to **this** `SKILL.md`'s parent + `/scripts/`. Compute it once at the start of the phase and reuse it. (ZCode, OpenCode, Kimi, Factory Droid all work this way.)
-- Example:
-  ```bash
-  SKILL_DIR="$(dirname "$(readlink -f "${SKILL_DOCUMENT:-$0}")")" 2>/dev/null || SKILL_DIR="<absolute path to this skill>"
-  python3 "$SKILL_DIR/scripts/slop_scan.py" chapters/ch_01.md
-  ```
-- The Python scripts are **pure stdlib** and run on Python 3.9+. No virtualenv needed.
+### Preferred: use the agent's skill-dir variable
 
-The four scripts: `slop_scan.py` (slop penalty 0–10), `beat_math.py` (structural beats), `assemble.py` (chapters → manuscript.md), `export.py` (EPUB/DOCX/PDF), `publish.py` (copyright page, cover spec, pricing, metadata, KDP readiness — for the publish phase), `image.py` (cover/illustration generation via ComfyUI, Google Imagen, OpenAI, fal.ai, Ideogram, Stability, or Replicate — for the publish phase).
+Each agent exposes the absolute path to the loaded skill directory:
+
+| Agent | Variable |
+|---|---|
+| Claude Code | `${CLAUDE_SKILL_DIR}` |
+| OpenCode | `$SKILL_DIR` (set by the agent before invoking your script) |
+| Factory Droid | `$FACTORY_SKILL_DIR` |
+| Hermes | `$HERMES_SKILL_DIR` |
+| Kimi | `$KIMI_SKILL_DIR` |
+
+Use whichever variable your agent provides. Example for Claude Code:
+```bash
+python3 "${CLAUDE_SKILL_DIR}/scripts/slop_scan.py" chapters/ch_01.md
+```
+
+If your agent doesn't expose a variable (or you're uncertain), the safe fallback is to ask the agent itself: **read this skill's `SKILL.md` to find the absolute path of this directory, then use `<that-path>/scripts/<name>.py`.** Most agents can answer that in a single line.
+
+### Do not rely on the old `readlink -f` shell trick
+
+The previous fallback (`SKILL_DIR="$(dirname "$(readlink -f "${SKILL_DOCUMENT:-$0}")")"`) was unreliable across shells (bash vs zsh), didn't handle symlinks, and frequently resolved to the wrong path. It's been removed from the recommendation. If you find yourself reaching for shell path tricks, ask the agent instead.
+
+The Python scripts are **pure stdlib** and run on Python 3.9+. No virtualenv needed.
+
+The scripts: `slop_scan.py` (slop penalty 0–10), `beat_math.py` (structural beats), `assemble.py` (chapters → manuscript.md), `export.py` (EPUB/DOCX/PDF), `publish.py` (copyright page, cover spec, pricing, metadata, KDP readiness — for the publish phase), `image.py` (cover/illustration generation via ComfyUI, Google Imagen, OpenAI, fal.ai, Ideogram, Stability, or Replicate — for the publish phase).
 
 ## The model, in one breath
 
@@ -199,15 +215,23 @@ Read on demand — do **not** preload all of these:
 
 ## Install / sync (npx)
 
-This skill is an npm package. To install or re-sync into all detected agents:
+This skill is an npm package. To install or re-sync into all detected agents, run from the directory of the machine you want it on:
 
 ```
-npx book-forge            # auto-detect + install to all detected agents
-npx book-forge --list     # show detection, install nothing
-npx book-forge --all      # install to ALL targets even if undetected
-npx book-forge claude     # install to one named target
-npx book-forge --uninstall
+npx github:MDsniper/book-forge            # auto-detect + install to all detected agents
+npx github:MDsniper/book-forge --list     # show detection, install nothing
+npx github:MDsniper/book-forge --all      # install to ALL targets even if undetected
+npx github:MDsniper/book-forge claude     # install to one named target
+npx github:MDsniper/book-forge --uninstall
 ```
+
+The `github:` prefix is required until this package is published to the npm registry; once it is, `npx book-forge` will work without it. The installer can also be run directly from any clone of the repo:
+
+```
+node <path-to-skill>/bin/cli.mjs
+```
+
+Pure stdlib Node (>=18), no dependencies. After install, invoke from any agent: `/book-forge <phase>` (Claude Code / Factory Droid / ZCode), `/skill:book-forge` (Kimi), or by description (OpenCode / OpenClaw / Hermes).
 
 Pure stdlib Node (>=18), no dependencies. After install, invoke from any agent: `/book-forge <phase>` (Claude Code / Factory Droid / ZCode), `/skill:book-forge` (Kimi), or by description (OpenCode / OpenClaw / Hermes).
 

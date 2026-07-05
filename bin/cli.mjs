@@ -17,7 +17,7 @@
 
 import { spawnSync } from "node:child_process";
 import {
-  cpSync, existsSync, mkdirSync, rmSync,
+  cpSync, existsSync, mkdirSync, realpathSync, rmSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { homedir, platform } from "node:os";
@@ -116,16 +116,31 @@ To start a book:
 // Install (or re-sync) the skill to one target. SAFETY: the destination is
 // never an ancestor of the source (would be a self-wipe), and the filter only
 // excludes node_modules / .git (NOT bin/ — bin/ is part of the skill).
+// Safety check: refuse to install into (or remove) a path that resolves
+// to the same location as the source. Uses realpathSync so symlinks
+// (some agents, e.g. OpenClaw, use symlinks under ~/.openclaw/skills/) are
+// compared at their actual target, not their textual path. This is the
+// bug that previously allowed the canonical's .git to be wiped by an
+// installer run from a different working directory.
+function _pathsOverlap(a, b) {
+  if (!a || !b) return false;
+  let ra, rb;
+  try { ra = realpathSync(a); } catch { ra = a; }
+  try { rb = realpathSync(b); } catch { rb = b; }
+  // Normalize trailing slashes
+  ra = ra.replace(/\/+$/, "");
+  rb = rb.replace(/\/+$/, "");
+  if (ra === rb) return true;
+  return ra.startsWith(rb + "/") || rb.startsWith(ra + "/");
+}
+
 function installTo(target) {
   if (!existsSync(join(SKILL_ROOT, "SKILL.md"))) {
     console.error(c.red(`✗ source SKILL.md not found at ${SKILL_ROOT}`));
     return false;
   }
-  // Resolve real paths to detect the dangerous self-inside-self case.
-  const srcResolved = SKILL_ROOT;
-  const dstResolved = target.path;
-  if (dstResolved === srcResolved || dstResolved.startsWith(srcResolved + "/") ||
-      srcResolved.startsWith(dstResolved + "/")) {
+  // Resolve real paths (handles symlinks — see _pathsOverlap comment).
+  if (_pathsOverlap(SKILL_ROOT, target.path)) {
     console.error(c.red(`✗ refusing to install into a path that overlaps the source (${target.path})`));
     return false;
   }
@@ -144,7 +159,7 @@ function installTo(target) {
 function uninstallFrom(target) {
   if (!existsSync(target.path)) return "absent";
   // Same overlap safety.
-  if (target.path === SKILL_ROOT || SKILL_ROOT.startsWith(target.path + "/")) {
+  if (_pathsOverlap(SKILL_ROOT, target.path)) {
     console.error(c.red(`✗ refusing to remove source path (${target.path})`));
     return "blocked";
   }
