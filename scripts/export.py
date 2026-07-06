@@ -207,7 +207,6 @@ LATEX_TEMPLATE = r"""\documentclass[10pt,twoside]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{ebgaramond}
-\usepackage[ebgaramond]{imbus}  % falls back gracefully
 \usepackage[margin=1in,paperwidth=6in,paperheight=9in]{geometry}
 \usepackage{microtype}
 \usepackage{titlesec}
@@ -217,6 +216,9 @@ LATEX_TEMPLATE = r"""\documentclass[10pt,twoside]{book}
 \fancyhf{}
 \fancyhead[LE]{\thepage}\fancyhead[RO]{\thepage}
 \renewcommand{\headrulewidth}{0pt}
+% pandoc emits body-only LaTeX that relies on these helper macros; define them
+% here since this custom template replaces pandoc's default preamble.
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \title{__TITLE__}
 \author{__AUTHOR__}
 \date{}
